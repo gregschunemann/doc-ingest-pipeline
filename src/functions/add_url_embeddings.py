@@ -32,6 +32,4 @@ logger.setLevel(level=os.environ.get("LOGLEVEL", "INFO").upper())
 
 @bp_add_url_embeddings.route(route="AddURLEmbeddings")
 def add_url_embeddings(req: func.HttpRequest) -> func.HttpResponse:
-    raise NotImplementedError(
-        "Helper modules not yet ported -- see spec 0002."
-    )
+    raise NotImplementedError("Helper modules not yet ported -- see spec 0002.")

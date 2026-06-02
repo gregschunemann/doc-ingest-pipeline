@@ -33,6 +33,4 @@ logger.setLevel(level=os.environ.get("LOGLEVEL", "INFO").upper())
 
 @bp_batch_start_processing.route(route="BatchStartProcessing")
 def batch_start_processing(req: func.HttpRequest) -> func.HttpResponse:
-    raise NotImplementedError(
-        "Helper modules not yet ported -- see spec 0002."
-    )
+    raise NotImplementedError("Helper modules not yet ported -- see spec 0002.")

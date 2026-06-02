@@ -37,6 +37,4 @@ queue_name = os.environ.get("DOCUMENT_PROCESSING_QUEUE_NAME", "doc-processing")
     connection="AzureWebJobsStorage",
 )
 def batch_push_results(msg: func.QueueMessage) -> None:
-    raise NotImplementedError(
-        "Helper modules not yet ported -- see spec 0002."
-    )
+    raise NotImplementedError("Helper modules not yet ported -- see spec 0002.")
