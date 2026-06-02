@@ -7,6 +7,8 @@
 > Spec ID: 0002 (proposed)
 
 > **This is a stub.** Spec 0001 closed without authoring spec 0002 in full. When the new repo is bootstrapped and a session picks this up, follow [`.github/instructions/create-spec.instructions.md`](../../../.github/instructions/create-spec.instructions.md) to expand this into a real `spec.md` + `tech-spec.md` + sub-specs + `tasks.md` under a date-stamped folder (`.docs/specs/YYYY-MM-DD-port-utilities-subtree/`).
+>
+> **2026-06-02 update:** [Spec 0003 (Bicep IaC for MVP Deploy)](../2026-06-02-bicep-mvp-deploy/spec.md) was authored and runs **in parallel** with this spec. The spec-0003 verification step (T0003-11) produces a live Azure environment that the spec-0002 implementer can develop against from day one, accepting a deliberately stubbed-but-deployed intermediate state. Spec 0002 remains the Phase 1 exit criterion.
 
 ## Overview
 

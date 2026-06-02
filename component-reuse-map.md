@@ -139,6 +139,8 @@ flowchart LR
 
 ## Infrastructure (Bicep)
 
+> **Spec 0003 SHA policy:** Bicep modules are **re-snapped to the current parent `main` at port time**, NOT pinned to spec-0001's `5c99c241b3ef4f4bbbcfdcca0d4b4b3a405424c3`. Parent Bicep churns faster than Python; re-snapping gets fixes for free. Record the re-snap SHA in the Notes column for every file copied during spec 0003. Mixing SHAs across modules within a single spec is forbidden -- pick one SHA at the start of [spec-0003 task T0003-01](.docs/specs/2026-06-02-bicep-mvp-deploy/tasks.md) and use it for every file in that spec.
+
 ### Reused IaC modules -- `infra/modules/`
 
 | Source path | Disposition | Target path | Notes |
