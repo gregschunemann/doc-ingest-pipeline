@@ -2,7 +2,7 @@
 
 > Spec: Scaffold Repo and Port Batch Function Entry Points
 > Created: 2026-06-02
-> Status: In Review
+> Status: Complete
 > Phase: 1 (MVP Carve-Out)
 > Spec ID: 0001
 
