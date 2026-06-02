@@ -18,7 +18,6 @@ import importlib
 
 import pytest
 
-
 # ---------------------------------------------------------------------------
 # function_app
 # ---------------------------------------------------------------------------
@@ -32,11 +31,11 @@ def test_function_app_imports_without_side_effects():
     assert hasattr(module, "app")
 
 
-def _find_function(app, name: str):
-    matches = [f for f in app.get_functions() if f.get_function_name() == name]
+def _find_function(functions, name: str):
+    matches = [f for f in functions if f.get_function_name() == name]
     assert len(matches) == 1, (
         f"expected exactly one function named {name!r}, "
-        f"got {[f.get_function_name() for f in app.get_functions()]}"
+        f"got {[f.get_function_name() for f in functions]}"
     )
     return matches[0]
 
@@ -49,10 +48,8 @@ def _trigger_dict(function) -> dict:
     pytest.fail(f"no trigger binding found for {function.get_function_name()!r}")
 
 
-def test_function_app_registers_batch_push_results_queue_trigger():
-    from src.functions.function_app import app
-
-    fn = _find_function(app, "batch_push_results")
+def test_function_app_registers_batch_push_results_queue_trigger(registered_functions):
+    fn = _find_function(registered_functions, "batch_push_results")
     trigger = _trigger_dict(fn)
 
     assert str(trigger.get("type", "")).lower() == "queuetrigger"
@@ -60,20 +57,16 @@ def test_function_app_registers_batch_push_results_queue_trigger():
     assert trigger.get("connection") == "AzureWebJobsStorage"
 
 
-def test_function_app_registers_batch_start_processing_http_route():
-    from src.functions.function_app import app
-
-    fn = _find_function(app, "batch_start_processing")
+def test_function_app_registers_batch_start_processing_http_route(registered_functions):
+    fn = _find_function(registered_functions, "batch_start_processing")
     trigger = _trigger_dict(fn)
 
     assert str(trigger.get("type", "")).lower() == "httptrigger"
     assert trigger.get("route") == "BatchStartProcessing"
 
 
-def test_function_app_registers_add_url_embeddings_http_route():
-    from src.functions.function_app import app
-
-    fn = _find_function(app, "add_url_embeddings")
+def test_function_app_registers_add_url_embeddings_http_route(registered_functions):
+    fn = _find_function(registered_functions, "add_url_embeddings")
     trigger = _trigger_dict(fn)
 
     assert str(trigger.get("type", "")).lower() == "httptrigger"
