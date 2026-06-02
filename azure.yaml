@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: doc-ingest-pipeline
+metadata:
+  template: doc-ingest-pipeline@0.1.0
+
+# Note: `infra/` Bicep modules are deferred to spec 0003.
+# `azd up` will not succeed end-to-end until spec 0003 lands.
+# This config exists now so that `azd init` recognizes the workspace
+# and lists the `function` service. See:
+#   .docs/specs/2026-06-02-scaffold-and-port-batch/spec.md
+
+services:
+  function:
+    project: ./src/functions
+    language: python
+    host: function
