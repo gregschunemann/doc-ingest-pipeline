@@ -8,22 +8,40 @@
 
 | Task ID | Title | Dependencies | Effort | Status |
 |---|---|---|---|---|
-| T0002-00 | Pre-flight: Record Parent SHA | None | XS | ⬜ Not Started |
-| T0002-01 | Port Common Types | T0002-00 | XS | ⬜ Not Started |
-| T0002-02 | Port Config Modules | T0002-01 | S | ⬜ Not Started |
-| T0002-03 | Port Core Helpers (Credentials, Blob, Search, DI) | T0002-02 | M | ⬜ Not Started |
-| T0002-04 | Port and Trim EnvHelper | T0002-03 | S | ⬜ Not Started |
-| T0002-05 | Port and Trim LLM Helper (Embedding Only) | T0002-04 | S | ⬜ Not Started |
-| T0002-06 | Port Document Loading Modules | T0002-05 | M | ⬜ Not Started |
-| T0002-07 | Port Document Chunking Modules | T0002-06 | M | ⬜ Not Started |
-| T0002-08 | Port Embedders | T0002-07 | M | ⬜ Not Started |
-| T0002-09 | Port Search Handlers | T0002-08 | S | ⬜ Not Started |
-| T0002-10 | Port Integrated Vectorization Components | T0002-09 | S | ⬜ Not Started |
-| T0002-11 | Implement batch_push_results Handler | T0002-10 | M | ⬜ Not Started |
-| T0002-12 | Implement batch_start_processing Handler | T0002-11 | S | ⬜ Not Started |
-| T0002-13 | Implement add_url_embeddings Handler | T0002-11 | S | ⬜ Not Started |
-| T0002-14 | End-to-End Verification | T0002-12, T0002-13 | M | ⬜ Not Started |
-| T0002-15 | Documentation and Closeout | T0002-14 | S | ⬜ Not Started |
+| T0002-00 | Pre-flight: Record Parent SHA | None | XS | ✅ Done (`5c99c24`) |
+| T0002-01 | Port Common Types | T0002-00 | XS | ✅ Done |
+| T0002-02 | Port Config Modules | T0002-01 | S | ✅ Done |
+| T0002-03 | Port Core Helpers (Credentials, Blob, Search, DI) | T0002-02 | M | ✅ Done |
+| T0002-04 | Port and Trim EnvHelper | T0002-03 | S | ✅ Done |
+| T0002-05 | Port and Trim LLM Helper (Embedding Only) | T0002-04 | S | ✅ Done |
+| T0002-06 | Port Document Loading Modules | T0002-05 | M | ✅ Done |
+| T0002-07 | Port Document Chunking Modules | T0002-06 | M | ✅ Done |
+| T0002-08 | Port Embedders | T0002-07 | M | ✅ Done |
+| T0002-09 | Port Search Handlers | T0002-08 | S | ✅ Done |
+| T0002-10 | Port Integrated Vectorization Components | T0002-09 | S | ✅ Done |
+| T0002-11 | Implement batch_push_results Handler | T0002-10 | M | ✅ Done |
+| T0002-12 | Implement batch_start_processing Handler | T0002-11 | S | ✅ Done |
+| T0002-13 | Implement add_url_embeddings Handler | T0002-11 | S | ✅ Done |
+| T0002-14 | End-to-End Verification | T0002-12, T0002-13 | M | 🟡 Partial — smoke tests pass; live Azure E2E pending deploy |
+| T0002-15 | Documentation and Closeout | T0002-14 | S | 🟡 In Progress — component-reuse-map and spec status updated; README quickstart pending |
+
+> **Open-question resolutions (confirmed 2026-06-09):**
+> - Integration tests against Azurite are deferred (skipped in CI). Smoke + import-guardrail tests gate the PR; live E2E is run manually post-deploy.
+> - Chunking strategy is configured via the global env var `CHUNKING_STRATEGY` (default `layout`); per-document overrides are out of scope.
+>
+> **Implementation log (2026-06-09):**
+> - Bulk-copied 44 files from `Azure-Samples/chat-with-your-data-solution-accelerator@5c99c241b3ef4f4bbbcfdcca0d4b4b3a405424c3` into `src/utilities/` preserving the parent's relative import structure (no per-file import rewrites required).
+> - Trims (see component-reuse-map.md for SHA-stamped row notes):
+>   - `env_helper.py`, `embedder_factory.py`, `search.py`: dropped the PostgreSQL branch; unknown `DATABASE_TYPE` now raises `ValueError("DEC-002 …")`.
+>   - `azure_search_helper.py`: removed `langchain_community.AzureSearch` import and the `get_conversation_logger()` chat method.
+>   - `llm_helper.py`: rewritten as an embedding-only proxy. Langchain / semantic-kernel / azure-ai-ml imports dropped; `get_chat_completion()` raises `NotImplementedError` per DEC-001.
+>   - `azure_computer_vision_client.py`: replaced with a constructor-only stub that raises `NotImplementedError` on every method. Image processing is reachable only when `USE_ADVANCED_IMAGE_PROCESSING=True`, which is `False` by default.
+>   - `orchestrator/__init__.py` + `orchestrator/orchestration_strategy.py`: introduced as inert dataclass/enum stubs so `ConfigHelper`/`EnvHelper` can populate `default.json` without pulling in any chat orchestrator behaviour (DEC-001).
+> - Function handler bodies for `batch_push_results`, `batch_start_processing`, `add_url_embeddings` ported in full using `src.utilities.*` absolute imports.
+> - `function_app.py` blueprint imports corrected to `src.functions.*` so pytest can run from the repo root (spec-0001 left them as bare imports that only worked under the Functions host).
+> - Dependencies in `pyproject.toml` and `src/functions/requirements.txt` pinned to the parent's versions (`azure-search-documents==11.6.0b1`, `openai==1.109.1`, `langchain==0.2.17`, `langchain-community==0.2.19`, `tiktoken`, `chardet==7.4.3`, `python-docx`, `beautifulsoup4`, `requests`).
+> - `.flake8` extended with `per-file-ignores = src/utilities/*:E501` so parent code keeps its line lengths verbatim while repo-owned code (functions, tests) stays at the 88-char limit.
+> - Gates: `black --check src tests` ✅, `flake8 src tests` ✅, `pytest -q` ✅ (11 smoke + guardrail tests, including assertions that PG / chat / image surfaces remain unreachable).
 
 **Total Estimated Effort:** 3-4 weeks
 **Critical Path:** T0002-00 → T0002-10 → T0002-11 → T0002-14 → T0002-15

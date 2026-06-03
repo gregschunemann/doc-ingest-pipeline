@@ -4,27 +4,24 @@ Carved out of the parent accelerator's
 ``code/backend/batch/batch_start_processing.py`` (commit
 ``5c99c241b3ef4f4bbbcfdcca0d4b4b3a405424c3``).
 
-Spec 0001 ports only the blueprint registration so the function host can
-discover the route. The handler body raises ``NotImplementedError`` until
-spec 0002 ports the blob client, queue client, and integrated-vectorization
-embedder.
+Spec-0002 implementation: full body ported from parent with
+``src.utilities.*`` import paths.
 """
 
+import json
 import logging
 import os
 
 import azure.functions as func
 
-# TODO(spec-0002): re-enable when helpers are ported.
-# import json
-# from src.utilities.helpers.azure_blob_storage_client import (
-#     AzureBlobStorageClient,
-#     create_queue_client,
-# )
-# from src.utilities.helpers.embedders.integrated_vectorization_embedder import (
-#     IntegratedVectorizationEmbedder,
-# )
-# from src.utilities.helpers.env_helper import EnvHelper
+from src.utilities.helpers.azure_blob_storage_client import (
+    AzureBlobStorageClient,
+    create_queue_client,
+)
+from src.utilities.helpers.embedders.integrated_vectorization_embedder import (
+    IntegratedVectorizationEmbedder,
+)
+from src.utilities.helpers.env_helper import EnvHelper
 
 bp_batch_start_processing = func.Blueprint()
 logger = logging.getLogger(__name__)
@@ -33,4 +30,26 @@ logger.setLevel(level=os.environ.get("LOGLEVEL", "INFO").upper())
 
 @bp_batch_start_processing.route(route="BatchStartProcessing")
 def batch_start_processing(req: func.HttpRequest) -> func.HttpResponse:
-    raise NotImplementedError("Helper modules not yet ported -- see spec 0002.")
+    logger.info("Requested to start processing all documents received")
+    env_helper: EnvHelper = EnvHelper()
+    azure_blob_storage_client = AzureBlobStorageClient()
+    files_data = azure_blob_storage_client.get_all_files()
+
+    files_data = list(map(lambda x: {"filename": x["filename"]}, files_data))
+
+    if env_helper.AZURE_SEARCH_USE_INTEGRATED_VECTORIZATION:
+        _reprocess_integrated_vectorization(env_helper)
+    else:
+        queue_client = create_queue_client()
+        for fd in files_data:
+            queue_client.send_message(json.dumps(fd).encode("utf-8"))
+
+    return func.HttpResponse(
+        f"Conversion started successfully for {len(files_data)} documents.",
+        status_code=200,
+    )
+
+
+def _reprocess_integrated_vectorization(env_helper: EnvHelper):
+    indexer_embedder = IntegratedVectorizationEmbedder(env_helper)
+    indexer_embedder.reprocess_all()
