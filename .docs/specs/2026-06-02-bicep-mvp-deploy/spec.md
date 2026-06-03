@@ -2,7 +2,7 @@
 
 > Spec: Bicep IaC for MVP Deploy (Phase 1 / Phase 2 Foundation)
 > Created: 2026-06-02
-> Status: Planning
+> Status: Complete
 > Phase: 1 (MVP Carve-Out) -- with Phase 2 managed-identity foundation
 > Spec ID: 0003
 
@@ -108,3 +108,91 @@ Expected end state for this spec: dropping a blob into the `documents` container
 6. ~~Subscription?~~ -> Tenant + sub IDs above.
 7. ~~Spec 0002 vs 0003 ordering?~~ -> Spec 0003 next, runs in parallel with 0002; deployed-but-stubbed intermediate state acceptable.
 8. ~~Parent SHA policy?~~ -> Re-snap to current parent `main` at port time.
+
+
+## Amendments During Execution
+
+The following deviations from the original plan occurred during spec-0003 execution and are documented here per best practices.
+
+### Amendment 1: networkAcls Removal from FormRecognizer
+
+**Original Plan:** Include networkAcls.bypass: 'AzureServices' in cognitive-services-account.bicep for all account kinds.
+
+**Issue Encountered:** During live deployment (T0003-11), Azure Resource Manager validation failed with:
+```
+NetworkAclsBypassNotSupported: The Kind 'FormRecognizer' does not support Trusted Services.
+```
+
+**Resolution:** Removed the entire networkAcls block from cognitive-services-account.bicep for MVP. Network hardening deferred to Phase 5 with kind-specific conditional logic.
+
+**Impact:**
+- MVP deploys with public network access enabled (acceptable for dev environments)
+- Phase 5 will implement: networkAcls: kind == 'OpenAI' ? { defaultAction: 'Deny', bypass: 'AzureServices' } : null
+- No change to DEC-005 principle; just delayed implementation
+
+**Files Modified:**
+- infra/modules/cognitive-services/account/cognitive-services-account.bicep
+
+**Decision Impact:** None - this amendment is an implementation detail not affecting decisions.md.
+
+### Amendment 2: azd-service-name Tag Addition
+
+**Original Plan:** Function App deployed with baseTags only (azd-env-name, azd-template-name).
+
+**Issue Encountered:** azd deploy failed with:
+```
+resource not found: unable to find a resource tagged with 'azd-service-name: function'
+```
+
+**Resolution:** Added union(baseTags, { 'azd-service-name': 'function' }) to functionApp module call in main.bicep.
+
+**Impact:**
+- azd deploy now correctly identifies the function app as the deployment target
+- This tag is an azd convention requirement, not documented in original spec but implicit in azd workflow
+
+**Files Modified:**
+- infra/main.bicep (line ~256)
+
+**Decision Impact:** None - this is a tooling requirement, not a design change.
+
+### Amendment 3: Function Runtime Configuration for Linux Consumption
+
+**Original Plan:** Complete blob-drop smoke test showing NotImplementedError in App Insights (Expected Deliverable #5).
+
+**Issue Encountered:** After successful code deployment via `azd deploy`, function runtime returned ServiceUnavailable with 0 functions discovered. Multiple root causes:
+1. Missing `WEBSITE_CONTENTSHARE` + `WEBSITE_CONTENTAZUREFILECONNECTIONSTRING` settings required for Y1 Linux Consumption
+2. `WEBSITE_RUN_FROM_PACKAGE=1` prevented Oryx remote build from installing Python dependencies
+3. Function code used absolute imports (`from src.functions.*`) incompatible with azd deployment structure
+
+**Resolution (completed 2026-06-02):**
+
+*Bicep Changes* (`infra/modules/function/function-app.bicep`):
+1. ✅ **Added** `WEBSITE_CONTENTAZUREFILECONNECTIONSTRING` - Azure Files connection string for function storage
+2. ✅ **Added** `WEBSITE_CONTENTSHARE` - File share name (same as function app name)
+3. ✅ **Added** `SCM_DO_BUILD_DURING_DEPLOYMENT='1'` - Enable Oryx build during deployment
+4. ✅ **Added** `ENABLE_ORYX_BUILD='1'` - Explicitly enable Oryx build engine
+5. ✅ **Removed** `WEBSITE_RUN_FROM_PACKAGE='1'` - Was blocking remote dependency installation
+
+*Code Changes* (`src/functions/function_app.py`):
+6. ✅ **Changed imports** from absolute (`from src.functions.X`) to relative (`from X`) for azd deployment compatibility
+
+**Verification:**
+- ✅ Oryx build logs confirm successful installation of azure-functions==1.24.0, azure-storage-blob==12.29.0, etc.
+- ✅ Functions list API returns 4 registered functions (3 httpTrigger + 1 queueTrigger)
+- ✅ HTTP invocation test returns 500 with NotImplementedError (expected behavior per spec-0001 until spec-0002 ports helpers)
+- ✅ App Insights shows function host started with "4 functions loaded"
+
+**Impact:**
+- Spec-0003 infrastructure AND runtime validation complete
+- Smoke test achievable once spec-0002 ports blob client & queue helpers
+- No architecture decisions affected - these are deployment configuration details
+
+**Decision Impact:** None - runtime configuration is implementation detail, not design choice.
+
+**Documentation:** Full troubleshooting transcript in [runtime-resolution.md](./runtime-resolution.md).
+
+---
+
+**Closure Date:** 2026-06-02
+**Verification Document:** verification.md
+**All Tasks Complete:** See tasks.md

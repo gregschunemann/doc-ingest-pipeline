@@ -1,0 +1,9 @@
+# Azure Functions Python requirements
+# Generated for spec-0003 Function App deployment
+# Matches pyproject.toml [tool.poetry.dependencies] runtime section
+
+azure-functions==1.24.0
+azure-storage-blob==12.29.0
+azure-storage-queue==12.16.0
+azure-identity==1.25.3
+python-dotenv==1.2.2

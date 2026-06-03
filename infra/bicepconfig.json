@@ -1,0 +1,34 @@
+{
+  "analyzers": {
+    "core": {
+      "verbose": false,
+      "enabled": true,
+      "rules": {
+        "no-hardcoded-env-urls": {
+          "level": "error"
+        },
+        "no-loc-expr-outside-params": {
+          "level": "error"
+        },
+        "no-unused-params": {
+          "level": "error"
+        },
+        "no-unused-vars": {
+          "level": "error"
+        },
+        "secure-parameter-default": {
+          "level": "error"
+        },
+        "outputs-should-not-contain-secrets": {
+          "level": "error"
+        },
+        "use-recent-api-versions": {
+          "level": "warning"
+        },
+        "use-stable-resource-identifiers": {
+          "level": "error"
+        }
+      }
+    }
+  }
+}

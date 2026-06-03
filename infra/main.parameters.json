@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environmentName": {
+      "value": "${AZURE_ENV_NAME}"
+    },
+    "location": {
+      "value": "${AZURE_LOCATION=swedencentral}"
+    },
+    "principalId": {
+      "value": "${AZURE_PRINCIPAL_ID}"
+    },
+    "principalType": {
+      "value": "${AZURE_PRINCIPAL_TYPE=User}"
+    },
+    "searchServiceSku": {
+      "value": "${AZURE_SEARCH_SKU=basic}"
+    },
+    "openAiSku": {
+      "value": "${AZURE_OPENAI_SKU=S0}"
+    },
+    "documentIntelligenceSku": {
+      "value": "${AZURE_FORM_RECOGNIZER_SKU=S0}"
+    },
+    "storageSku": {
+      "value": "${AZURE_STORAGE_SKU=Standard_LRS}"
+    },
+    "useIntegratedVectorization": {
+      "value": "${AZURE_SEARCH_USE_INTEGRATED_VECTORIZATION=false}"
+    }
+  }
+}

@@ -145,8 +145,20 @@ flowchart LR
 
 | Source path | Disposition | Target path | Notes |
 |---|---|---|---|
-| `infra/modules/storage/storage-account/` | REUSE | `infra/modules/storage/storage-account/` | |
-| `infra/modules/cognitive-services/account/` | MODIFY | `infra/modules/cognitive-services/account/` | Provision only Document Intelligence and AOAI embeddings; drop chat model deployments |
+| `infra/abbreviations.json` | REUSE | `infra/abbreviations.json` | Verbatim copy at SHA `5c99c241b3ef4f4bbbcfdcca0d4b4b3a405424c3` (2026-05-26) per T0003-01 |
+| `infra/modules/storage/storage-account/` | MODIFY | `infra/modules/storage/storage-account/` | Simplified from parent SHA `5c99c241b3ef4f4bbbcfdcca0d4b4b3a405424c3` per T0003-02; trimmed AVM imports, private endpoints, network ACLs, custom domain support (deferred to Phase 5) |
+| `infra/modules/storage/blob-container.bicep` | NEW | `infra/modules/storage/blob-container.bicep` | Created per T0003-02 (not in parent) |
+| `infra/modules/storage/queue.bicep` | NEW | `infra/modules/storage/queue.bicep` | Created per T0003-02 (not in parent) |
+| `infra/modules/cognitive-services/account/` | MODIFY | `infra/modules/cognitive-services/account/` | Simplified from parent SHA `5c99c241b3ef4f4bbbcfdcca0d4b4b3a405424c3` per T0003-03; generic account module supporting FormRecognizer and OpenAI kinds, trimmed chat deployments (moved to embedding-deployment.bicep), API version updated to 2024-10-01 |
+| `infra/modules/cognitive-services/embedding-deployment.bicep` | NEW | `infra/modules/cognitive-services/embedding-deployment.bicep` | Created per T0003-03 (not in parent); deploys text-embedding-3-small with GlobalStandard SKU per T0003-00 amendment |
+| `infra/modules/search/search-service.bicep` | NEW | `infra/modules/search/search-service.bicep` | Created per T0003-04 (not in parent); Azure AI Search with Basic SKU for MVP, API version 2023-11-01 |
+| `infra/modules/monitor/log-analytics-workspace.bicep` | NEW | `infra/modules/monitor/log-analytics-workspace.bicep` | Created per T0003-05 (not in parent); simplified from parent's AVM-based approach, PerGB2018 SKU with 30-day retention |
+| `infra/modules/monitor/application-insights.bicep` | NEW | `infra/modules/monitor/application-insights.bicep` | Created per T0003-05 (not in parent); workspace-based App Insights connected to Log Analytics |
+| `infra/modules/key-vault/key-vault.bicep` | MODIFY | `infra/modules/key-vault/key-vault.bicep` | Simplified from parent SHA `5c99c241b3ef4f4bbbcfdcca0d4b4b3a405424c3` per T0003-06; RBAC mode, Standard SKU, trimmed private endpoints and network restrictions (Phase 5) |
+| `infra/modules/function/app-service-plan.bicep` | NEW | `infra/modules/function/app-service-plan.bicep` | Created per T0003-07 (not in parent); Linux Y1 Consumption plan for MVP |
+| `infra/modules/function/function-app.bicep` | MODIFY | `infra/modules/function/function-app.bicep` | Simplified from parent SHA `5c99c241b3ef4f4bbbcfdcca0d4b4b3a405424c3` per T0003-07; system-assigned MI, Python 3.11, all app settings per tech-spec table, AzureWebJobsStorage uses connection string (Y1 fallback) |
+| `infra/modules/eventgrid/eventgrid-system-topic.bicep` | MODIFY | `infra/modules/eventgrid/eventgrid-system-topic.bicep` | Simplified from parent SHA `5c99c241b3ef4f4bbbcfdcca0d4b4b3a405424c3` per T0003-08; removed AVM module dependency, direct Event Grid resources, BlobCreated trigger on 'documents' container → 'doc-processing' queue |
+| `infra/modules/roleassignments/role-assignments.bicep` | NEW | `infra/modules/roleassignments/role-assignments.bicep` | Created per T0003-09 (new module); implements 7 Function App MI role assignments + 2 break-glass user assignments per tech-spec Role Assignments Matrix; simplified from parent SHA `5c99c241b3ef4f4bbbcfdcca0d4b4b3a405424c3` (parent used AVM pattern module, this is direct assignment approach) |
 | `infra/modules/app/function.bicep` | REUSE | `infra/modules/app/function.bicep` | |
 | `infra/modules/app/eventgrid.bicep` | REUSE | `infra/modules/app/eventgrid.bicep` | Blob events to Storage Queue |
 | `infra/modules/app/roleassignments.bicep` | MODIFY | `infra/modules/app/roleassignments.bicep` | Trim assignments to only Storage, Search, Document Intelligence, AOAI, Key Vault |

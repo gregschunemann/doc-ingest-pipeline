@@ -2,13 +2,12 @@
 
 name: doc-ingest-pipeline
 metadata:
-  template: doc-ingest-pipeline@0.1.0
+  template: doc-ingest-pipeline@0.2.0
 
-# Note: `infra/` Bicep modules are deferred to spec 0003.
-# `azd up` will not succeed end-to-end until spec 0003 lands.
-# This config exists now so that `azd init` recognizes the workspace
-# and lists the `function` service. See:
-#   .docs/specs/2026-06-02-scaffold-and-port-batch/spec.md
+infra:
+  provider: bicep
+  path: infra
+  module: main
 
 services:
   function:
