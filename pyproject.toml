@@ -24,7 +24,7 @@ requests = "2.34.2"
 beautifulsoup4 = "4.14.3"
 python-docx = "1.2.0"
 tiktoken = "0.13.0"
-tenacity = "9.0.0"
+tenacity = "^8.5.0"
 typing-extensions = "4.12.2"
 chardet = "7.4.3"
 # langchain text splitters + community document loaders are used by the
