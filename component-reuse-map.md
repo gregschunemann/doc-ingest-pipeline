@@ -49,6 +49,8 @@ flowchart LR
 
 ### Document loading -- `code/backend/batch/utilities/document_loading/`
 
+> **Spec 0002 status:** All `src/utilities/**` rows below ported from parent commit `5c99c241b3ef4f4bbbcfdcca0d4b4b3a405424c3` on 2026-06-09. Where the parent code referenced excluded surfaces (PG, chat orchestrator, image processing), the port either trims the offending branch or substitutes an inert stub -- see Notes. Function handler bodies (`batch_push_results`, `batch_start_processing`, `add_url_embeddings`) were also filled in during spec-0002 once the helpers were available.
+
 | Source path | Disposition | Target path | Notes |
 |---|---|---|---|
 | `document_loading_base.py` | REUSE | `src/utilities/document_loading/document_loading_base.py` | |
@@ -75,10 +77,10 @@ flowchart LR
 
 | Source path | Disposition | Target path | Notes |
 |---|---|---|---|
-| `embedder_base.py` | REUSE | `src/utilities/embedders/embedder_base.py` | |
-| `embedder_factory.py` | MODIFY | `src/utilities/embedders/embedder_factory.py` | Remove the PostgreSQL branch |
-| `push_embedder.py` | MODIFY | `src/utilities/embedders/push_embedder.py` | Image-processing branch behind feature flag; Phase 4 by default OFF |
-| `integrated_vectorization_embedder.py` | REUSE | `src/utilities/embedders/integrated_vectorization_embedder.py` | |
+| `embedder_base.py` | REUSE | `src/utilities/helpers/embedders/embedder_base.py` | Ported verbatim at `5c99c24` (spec-0002) |
+| `embedder_factory.py` | MODIFY | `src/utilities/helpers/embedders/embedder_factory.py` | Ported at `5c99c24` (spec-0002). PostgreSQL branch removed; unknown `DATABASE_TYPE` raises `ValueError` citing DEC-002 |
+| `push_embedder.py` | MODIFY | `src/utilities/helpers/embedders/push_embedder.py` | Ported verbatim at `5c99c24` (spec-0002). Image-processing branch remains in source but only triggers when `USE_ADVANCED_IMAGE_PROCESSING=True`, which is `False` by default and gated by the stub `AzureComputerVisionClient` below |
+| `integrated_vectorization_embedder.py` | REUSE | `src/utilities/helpers/embedders/integrated_vectorization_embedder.py` | Ported verbatim at `5c99c24` (spec-0002) |
 | `postgres_embedder.py` | SKIP | -- | DEC-002 |
 
 ### AI Search wiring -- `code/backend/batch/utilities/integrated_vectorization/`
@@ -94,35 +96,42 @@ flowchart LR
 
 | Source path | Disposition | Target path | Notes |
 |---|---|---|---|
-| `search.py` | MODIFY | `src/utilities/search/search.py` | Drop PG branch |
-| `search_handler_base.py` | REUSE | `src/utilities/search/search_handler_base.py` | |
-| `azure_search_handler.py` | REUSE | `src/utilities/search/azure_search_handler.py` | |
-| `integrated_vectorization_search_handler.py` | REUSE | `src/utilities/search/integrated_vectorization_search_handler.py` | |
+| `search.py` | MODIFY | `src/utilities/search/search.py` | Ported at `5c99c24` (spec-0002). PostgreSQL branch removed; unknown `DATABASE_TYPE` raises `ValueError` citing DEC-002 |
+| `search_handler_base.py` | REUSE | `src/utilities/search/search_handler_base.py` | Ported verbatim at `5c99c24` (spec-0002) |
+| `azure_search_handler.py` | REUSE | `src/utilities/search/azure_search_handler.py` | Ported verbatim at `5c99c24` (spec-0002) |
+| `integrated_vectorization_search_handler.py` | REUSE | `src/utilities/search/integrated_vectorization_search_handler.py` | Ported verbatim at `5c99c24` (spec-0002) |
 | `postgres_search_handler.py` | SKIP | -- | DEC-002 |
 
 ### Cross-cutting helpers -- `code/backend/batch/utilities/helpers/`
 
 | Source path | Disposition | Target path | Notes |
 |---|---|---|---|
-| `azure_blob_storage_client.py` | REUSE | `src/utilities/helpers/azure_blob_storage_client.py` | |
-| `azure_form_recognizer_helper.py` | REUSE | `src/utilities/helpers/azure_form_recognizer_helper.py` | Document Intelligence wrapper |
-| `azure_search_helper.py` | REUSE | `src/utilities/helpers/azure_search_helper.py` | |
-| `azure_credential_utils.py` | REUSE | `src/utilities/helpers/azure_credential_utils.py` | |
-| `azure_computer_vision_client.py` | MODIFY | `src/utilities/helpers/azure_computer_vision_client.py` | Keep but gate via feature flag (Phase 4) |
+| `azure_blob_storage_client.py` | REUSE | `src/utilities/helpers/azure_blob_storage_client.py` | Ported verbatim at `5c99c24` (spec-0002) |
+| `azure_form_recognizer_helper.py` | REUSE | `src/utilities/helpers/azure_form_recognizer_helper.py` | Ported verbatim at `5c99c24` (spec-0002). Document Intelligence wrapper |
+| `azure_search_helper.py` | MODIFY | `src/utilities/helpers/azure_search_helper.py` | Ported at `5c99c24` (spec-0002). Removed `langchain_community.AzureSearch` import and `get_conversation_logger()` (chat-only surface per DEC-001) |
+| `azure_credential_utils.py` | REUSE | `src/utilities/helpers/azure_credential_utils.py` | Ported verbatim at `5c99c24` (spec-0002) |
+| `azure_computer_vision_client.py` | MODIFY | `src/utilities/helpers/azure_computer_vision_client.py` | **Replaced with stub at `5c99c24` (spec-0002).** Constructor accepts the parent signature so `AzureSearchHelper.__init__` and `AzureSearchHandler.__init__` continue to work; all instance methods raise `NotImplementedError`. Methods are only reached when `USE_ADVANCED_IMAGE_PROCESSING=True`, which defaults to `False`. Full implementation deferred per the roadmap |
 | `azure_postgres_helper.py` | SKIP | -- | DEC-002 |
-| `env_helper.py` | MODIFY | `src/utilities/helpers/env_helper.py` | Trim to ingestion-only env vars; remove chat/orchestrator/PG/Cosmos/Speech/Content-Safety keys |
-| `llm_helper.py` | MODIFY | `src/utilities/helpers/llm_helper.py` | Keep `generate_embeddings`; remove chat-completion paths unless image captioning Phase 4 is enabled |
-| `document_loading_helper.py` | REUSE | `src/utilities/helpers/document_loading_helper.py` | |
-| `document_chunking_helper.py` | REUSE | `src/utilities/helpers/document_chunking_helper.py` | |
+| `env_helper.py` | MODIFY | `src/utilities/helpers/env_helper.py` | Ported at `5c99c24` (spec-0002). PostgreSQL branch removed (`ValueError` cites DEC-002); orchestrator/chat-flow imports dropped (the `*_strategy` enum modules remain importable as inert stubs for `ConfigHelper`'s `default.json` substitution) |
+| `llm_helper.py` | MODIFY | `src/utilities/helpers/llm_helper.py` | **Rewritten** for spec-0002 (parent SHA `5c99c24`). Embedding-only proxy: keeps `generate_embeddings` and `get_embedding_model()` (rewired to call the OpenAI SDK directly); langchain / semantic-kernel / azure-ai-ml imports and all chat-completion methods dropped; `get_chat_completion()` raises `NotImplementedError` per DEC-001 |
+| `document_loading_helper.py` | REUSE | `src/utilities/helpers/document_loading_helper.py` | Ported verbatim at `5c99c24` (spec-0002) |
+| `document_chunking_helper.py` | REUSE | `src/utilities/helpers/document_chunking_helper.py` | Ported verbatim at `5c99c24` (spec-0002) |
 | `orchestrator_helper.py` | SKIP | -- | Chat orchestration |
-| `prompt_utils.py` | SKIP | -- | Chat orchestration |
-| `config/` (whole folder) | MODIFY | `src/utilities/helpers/config/` | Keep `ConfigHelper`, `EmbeddingConfig`, integrated_vectorization_config; remove orchestrator/prompt/chat config |
+| `prompt_utils.py` | SKIP | -- | Chat orchestration (only referenced from excluded orchestrator/tools/plugins trees) |
+| `config/` (whole folder) | MODIFY | `src/utilities/helpers/config/` | Ported at `5c99c24` (spec-0002). `ConfigHelper`, `EmbeddingConfig`, `integrated_vectorization_config`, `DatabaseType`, and the `conversation_flow` / `assistant_strategy` enums are kept (inert -- needed by `default.json` round-tripping); orchestrator / prompt / chat-message config and tools/plugins config are dropped |
 
 ### Common types -- `code/backend/batch/utilities/common/`
 
 | Source path | Disposition | Target path | Notes |
 |---|---|---|---|
-| `common/source_document.py` and siblings | REUSE | `src/utilities/common/...` | Used by loaders, chunkers, embedders |
+| `common/source_document.py` and siblings | REUSE | `src/utilities/common/...` | Ported verbatim at `5c99c24` (spec-0002). Used by loaders, chunkers, embedders |
+
+### Inert orchestrator stub -- new in spec-0002
+
+| Source path | Disposition | Target path | Notes |
+|---|---|---|---|
+| `code/backend/batch/utilities/orchestrator/orchestration_strategy.py` | MODIFY | `src/utilities/orchestrator/orchestration_strategy.py` | Spec-0002. Enum-only module (no orchestrator classes). Required because `EnvHelper`/`ConfigHelper` reference `OrchestrationStrategy` values when round-tripping `default.json`. Importing the package does **not** pull in any chat orchestrator logic |
+| `code/backend/batch/utilities/orchestrator/__init__.py` (and `orchestration_settings.py`) | MODIFY | `src/utilities/orchestrator/__init__.py` | Spec-0002. Inert `OrchestrationSettings` dataclass (data only, no `orchestrate` behaviour). Per DEC-001 the chat orchestrator surface is not ported -- this stub exists solely so `ConfigHelper` can populate its `orchestrator` field |
 
 ### Modules explicitly excluded
 

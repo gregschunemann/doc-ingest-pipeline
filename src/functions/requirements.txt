@@ -1,9 +1,30 @@
 # Azure Functions Python requirements
 # Generated for spec-0003 Function App deployment
+# Extended in spec-0002 with helper-module runtime dependencies
 # Matches pyproject.toml [tool.poetry.dependencies] runtime section
 
 azure-functions==1.24.0
 azure-storage-blob==12.29.0
 azure-storage-queue==12.16.0
 azure-identity==1.25.3
+azure-keyvault-secrets==4.10.0
 python-dotenv==1.2.2
+
+# Spec-0002 ingestion-pipeline helpers
+azure-ai-formrecognizer==3.3.3
+azure-search-documents==11.6.0b1
+openai==1.109.1
+requests==2.34.2
+beautifulsoup4==4.14.3
+python-docx==1.2.0
+tiktoken==0.13.0
+tenacity==8.5.0
+typing-extensions==4.12.2
+chardet==7.4.3
+
+# document_chunking modules use ``langchain.text_splitter`` (TokenTextSplitter,
+# RecursiveJsonSplitter, MarkdownTextSplitter) and document_loading/web uses
+# ``langchain_community.document_loaders.WebBaseLoader`` -- these are
+# genuine ingestion-path dependencies, not chat-only.
+langchain==0.2.17
+langchain-community==0.2.19

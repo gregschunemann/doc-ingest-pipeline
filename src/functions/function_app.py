@@ -16,10 +16,10 @@ import os
 
 import azure.functions as func
 
-from add_url_embeddings import bp_add_url_embeddings
-from batch_push_results import bp_batch_push_results
-from batch_start_processing import bp_batch_start_processing
-from combine_pages_chunknos import bp_combine_pages_and_chunknos
+from src.functions.add_url_embeddings import bp_add_url_embeddings
+from src.functions.batch_push_results import bp_batch_push_results
+from src.functions.batch_start_processing import bp_batch_start_processing
+from src.functions.combine_pages_chunknos import bp_combine_pages_and_chunknos
 
 # TODO(spec-0002): re-enable once azure-monitor-opentelemetry is added to deps
 # from azure.monitor.opentelemetry import configure_azure_monitor

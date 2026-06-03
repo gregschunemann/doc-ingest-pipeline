@@ -3,6 +3,14 @@ max-line-length = 88
 extend-ignore =
     E203,
     W503
+# The src/utilities/* tree is ported verbatim from
+# Azure-Samples/chat-with-your-data-solution-accelerator (per spec-0002 /
+# component-reuse-map.md). The parent does not enforce an 88-char line
+# limit, so we suppress E501 there to keep the diff against upstream
+# minimal and reviewable. Code authored in this repo (under src/functions,
+# tests, etc.) is still held to the full 88-char limit.
+per-file-ignores =
+    src/utilities/*:E501
 exclude =
     .git,
     __pycache__,

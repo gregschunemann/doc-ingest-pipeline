@@ -2,9 +2,10 @@
 
 > Spec: Port Helper Modules and Utilities for End-to-End Ingestion
 > Created: 2026-06-02
-> Status: Planning
+> Status: In Progress (code complete; pending deployment validation)
 > Phase: 1 (MVP Carve-Out)
 > Spec ID: 0002
+> Parent SHA (port base): `5c99c241b3ef4f4bbbcfdcca0d4b4b3a405424c3`
 
 > **2026-06-02 Activation:** Spec-0003 (Bicep infrastructure) is now **complete** with all Azure resources provisioned and functions deployed. This spec can now proceed with full helper module porting to enable end-to-end document ingestion. This is the Phase 1 exit criterion.
 
