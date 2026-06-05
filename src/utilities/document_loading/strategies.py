@@ -3,6 +3,7 @@ from .layout import LayoutDocumentLoading
 from .read import ReadDocumentLoading
 from .web import WebDocumentLoading
 from .word_document import WordDocumentLoading
+from .contract import ContractDocumentLoading
 
 
 class LoadingStrategy(Enum):
@@ -10,6 +11,7 @@ class LoadingStrategy(Enum):
     READ = "read"
     WEB = "web"
     DOCX = "docx"
+    CONTRACT = "contract"
 
 
 def get_document_loader(loader_strategy: str):
@@ -21,5 +23,7 @@ def get_document_loader(loader_strategy: str):
         return WebDocumentLoading()
     elif loader_strategy == LoadingStrategy.DOCX.value:
         return WordDocumentLoading()
+    elif loader_strategy == LoadingStrategy.CONTRACT.value:
+        return ContractDocumentLoading()
     else:
-        raise Exception(f"Unknown loader strategy: {loader_strategy}")
+        raise ValueError(f"Unknown loader strategy: {loader_strategy}")

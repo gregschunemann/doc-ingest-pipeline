@@ -40,7 +40,10 @@ All versions below match the parent accelerator at the time this product was pla
 
 ### Document Parsing
 - **Service:** Azure AI Document Intelligence (`azure-ai-formrecognizer` 3.3.3)
-- **Strategies used:** `read` (text-only) and `layout` (structure-aware)
+- **Strategies supported:**
+  - `read` (text-only extraction)
+  - `layout` (structure-aware parsing with tables and roles)
+  - `contract` (specialized contract analysis with entity extraction)
 
 ### Embeddings
 - **Push mode:** Azure OpenAI embeddings via `openai` 1.109.1, default deployment `text-embedding-3-small` (1536 dims)

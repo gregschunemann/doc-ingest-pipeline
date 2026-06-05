@@ -153,3 +153,141 @@ class AzureFormRecognizerClient:
             raise ValueError(f"Error: {traceback.format_exc()}. Error: {e}")
         finally:
             logger.info("Method begin_analyze_document_from_url ended")
+
+    def begin_analyze_contract_from_url(self, source_url: str):
+        """
+        Analyze a contract document using the prebuilt-contract model.
+
+        The prebuilt-contract model extracts contract-specific entities including:
+        - Parties: Entities entering into the contract
+        - Contract type: NDA, employment agreement, lease, etc.
+        - Key dates: Effective date, expiration, renewal dates
+        - Clauses: Payment terms, termination conditions, liability, etc.
+        - Monetary amounts: Values, prices, payments
+        - Addresses: Physical locations referenced in the contract
+
+        Args:
+            source_url: URL of the contract document to analyze
+
+        Returns:
+            dict: Contract content and extracted entities in a structured format:
+                {
+                    "content": str,  # Full text content of the contract
+                    "contract_type": str,
+                    "parties": list[str],
+                    "effective_date": str,
+                    "expiration_date": str,
+                    "clauses": dict,
+                    "monetary_amounts": list[dict],
+                    "addresses": list[str]
+                }
+        """
+        model_id = "prebuilt-contract"
+
+        try:
+            logger.info("Method begin_analyze_contract_from_url started")
+            logger.info("Model ID selected: %s", model_id)
+
+            poller = self.document_analysis_client.begin_analyze_document_from_url(
+                model_id, document_url=source_url
+            )
+            contract_results = poller.result()
+
+            # Extract full text content
+            content = contract_results.content if contract_results.content else ""
+
+            # Extract contract-specific fields
+            contract_data = {
+                "content": content,
+                "contract_type": None,
+                "parties": [],
+                "effective_date": None,
+                "expiration_date": None,
+                "clauses": {},
+                "monetary_amounts": [],
+                "addresses": [],
+            }
+
+            # Extract fields from the contract analysis
+            if hasattr(contract_results, "documents") and contract_results.documents:
+                document = contract_results.documents[0]
+                fields = document.fields if hasattr(document, "fields") else {}
+
+                # Extract contract type
+                if "ContractType" in fields and fields["ContractType"]:
+                    contract_data["contract_type"] = fields["ContractType"].value
+
+                # Extract parties
+                if "Parties" in fields and fields["Parties"]:
+                    parties_field = fields["Parties"]
+                    if hasattr(parties_field, "value") and isinstance(
+                        parties_field.value, list
+                    ):
+                        contract_data["parties"] = [
+                            party.value if hasattr(party, "value") else str(party)
+                            for party in parties_field.value
+                        ]
+
+                # Extract dates
+                if "EffectiveDate" in fields and fields["EffectiveDate"]:
+                    contract_data["effective_date"] = str(fields["EffectiveDate"].value)
+
+                if "ExpirationDate" in fields and fields["ExpirationDate"]:
+                    contract_data["expiration_date"] = str(
+                        fields["ExpirationDate"].value
+                    )
+
+                # Extract monetary amounts
+                if "MonetaryAmounts" in fields and fields["MonetaryAmounts"]:
+                    amounts_field = fields["MonetaryAmounts"]
+                    if hasattr(amounts_field, "value") and isinstance(
+                        amounts_field.value, list
+                    ):
+                        contract_data["monetary_amounts"] = [
+                            {
+                                "amount": (
+                                    str(amt.value)
+                                    if hasattr(amt, "value")
+                                    else str(amt)
+                                )
+                            }
+                            for amt in amounts_field.value
+                        ]
+
+                # Extract addresses
+                if "Addresses" in fields and fields["Addresses"]:
+                    addresses_field = fields["Addresses"]
+                    if hasattr(addresses_field, "value") and isinstance(
+                        addresses_field.value, list
+                    ):
+                        contract_data["addresses"] = [
+                            addr.value if hasattr(addr, "value") else str(addr)
+                            for addr in addresses_field.value
+                        ]
+
+                # Extract key clauses
+                clause_fields = [
+                    "PaymentTerms",
+                    "TerminationClause",
+                    "LiabilityClause",
+                    "ConfidentialityClause",
+                    "IndemnificationClause",
+                ]
+                for clause_name in clause_fields:
+                    if clause_name in fields and fields[clause_name]:
+                        contract_data["clauses"][clause_name] = str(
+                            fields[clause_name].value
+                        )
+
+            logger.info("Extracted contract type: %s", contract_data["contract_type"])
+            logger.info("Extracted %d parties", len(contract_data["parties"]))
+
+            return contract_data
+
+        except Exception as e:
+            logger.exception("Exception in begin_analyze_contract_from_url: %s", e)
+            raise ValueError(
+                f"Error analyzing contract: {traceback.format_exc()}. Error: {e}"
+            )
+        finally:
+            logger.info("Method begin_analyze_contract_from_url ended")

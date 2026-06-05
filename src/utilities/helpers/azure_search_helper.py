@@ -229,6 +229,153 @@ class AzureSearchHelper:
             name for name in self.search_index_client.list_index_names()
         ]
 
+    def create_contract_index(self):
+        """
+        Create an Azure AI Search index specifically for contracts.
+
+        This index schema supports contract-specific fields extracted by the
+        prebuilt-contract model, including parties, contract type, dates,
+        clauses, monetary amounts, and addresses.
+        """
+        fields = [
+            SimpleField(
+                name=self.env_helper.AZURE_SEARCH_FIELDS_ID,
+                type=SearchFieldDataType.String,
+                key=True,
+                filterable=True,
+            ),
+            SearchableField(
+                name=self.env_helper.AZURE_SEARCH_CONTENT_COLUMN,
+                type=SearchFieldDataType.String,
+            ),
+            SearchField(
+                name=self.env_helper.AZURE_SEARCH_CONTENT_VECTOR_COLUMN,
+                type=SearchFieldDataType.Collection(SearchFieldDataType.Single),
+                searchable=True,
+                vector_search_dimensions=self.search_dimensions,
+                vector_search_profile_name="myHnswProfile",
+            ),
+            SearchableField(
+                name=self.env_helper.AZURE_SEARCH_FIELDS_METADATA,
+                type=SearchFieldDataType.String,
+            ),
+            SearchableField(
+                name=self.env_helper.AZURE_SEARCH_TITLE_COLUMN,
+                type=SearchFieldDataType.String,
+                facetable=True,
+                filterable=True,
+            ),
+            SearchableField(
+                name=self.env_helper.AZURE_SEARCH_SOURCE_COLUMN,
+                type=SearchFieldDataType.String,
+                filterable=True,
+            ),
+            # Contract-specific fields
+            SearchableField(
+                name="contract_type",
+                type=SearchFieldDataType.String,
+                filterable=True,
+                facetable=True,
+            ),
+            SearchableField(
+                name="parties",
+                type=SearchFieldDataType.Collection(SearchFieldDataType.String),
+                filterable=True,
+            ),
+            SimpleField(
+                name="effective_date",
+                type=SearchFieldDataType.String,
+                filterable=True,
+                sortable=True,
+            ),
+            SimpleField(
+                name="expiration_date",
+                type=SearchFieldDataType.String,
+                filterable=True,
+                sortable=True,
+            ),
+            SearchableField(
+                name="clauses",
+                type=SearchFieldDataType.String,
+            ),
+            SearchableField(
+                name="monetary_amounts",
+                type=SearchFieldDataType.String,
+            ),
+            SearchableField(
+                name="addresses",
+                type=SearchFieldDataType.Collection(SearchFieldDataType.String),
+            ),
+        ]
+
+        index = SearchIndex(
+            name=self.env_helper.AZURE_SEARCH_CONTRACT_INDEX,
+            fields=fields,
+            semantic_search=(
+                SemanticSearch(
+                    configurations=[
+                        SemanticConfiguration(
+                            name=self.env_helper.AZURE_SEARCH_SEMANTIC_SEARCH_CONFIG,
+                            prioritized_fields=SemanticPrioritizedFields(
+                                title_field=SemanticField(
+                                    field_name=self.env_helper.AZURE_SEARCH_TITLE_COLUMN
+                                ),
+                                content_fields=[
+                                    SemanticField(
+                                        field_name=self.env_helper.AZURE_SEARCH_CONTENT_COLUMN
+                                    ),
+                                    SemanticField(field_name="clauses"),
+                                ],
+                            ),
+                        )
+                    ]
+                )
+            ),
+            vector_search=VectorSearch(
+                algorithms=[
+                    HnswAlgorithmConfiguration(
+                        name="default",
+                        parameters=HnswParameters(
+                            metric=VectorSearchAlgorithmMetric.COSINE
+                        ),
+                        kind=VectorSearchAlgorithmKind.HNSW,
+                    ),
+                    ExhaustiveKnnAlgorithmConfiguration(
+                        name="default_exhaustive_knn",
+                        kind=VectorSearchAlgorithmKind.EXHAUSTIVE_KNN,
+                        parameters=ExhaustiveKnnParameters(
+                            metric=VectorSearchAlgorithmMetric.COSINE
+                        ),
+                    ),
+                ],
+                profiles=[
+                    VectorSearchProfile(
+                        name="myHnswProfile",
+                        algorithm_configuration_name="default",
+                    ),
+                    VectorSearchProfile(
+                        name="myExhaustiveKnnProfile",
+                        algorithm_configuration_name="default_exhaustive_knn",
+                    ),
+                ],
+            ),
+        )
+
+        if self._index_not_exists(self.env_helper.AZURE_SEARCH_CONTRACT_INDEX):
+            logger.info(
+                "Creating contract index %s",
+                self.env_helper.AZURE_SEARCH_CONTRACT_INDEX,
+            )
+            self.search_index_client.create_index(index)
+            logger.info(
+                "Contract index %s created", self.env_helper.AZURE_SEARCH_CONTRACT_INDEX
+            )
+        else:
+            logger.info(
+                "Contract index %s already exists",
+                self.env_helper.AZURE_SEARCH_CONTRACT_INDEX,
+            )
+
     # `get_conversation_logger` was removed from this port (DEC-001/DEC-004).
     # It built a LangChain `AzureSearch` vectorstore over a chat-history index
     # that doc-ingest-pipeline never creates or queries.

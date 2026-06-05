@@ -99,11 +99,20 @@ class EnvHelper:
         self.AZURE_SEARCH_DOC_UPLOAD_BATCH_SIZE = os.getenv(
             "AZURE_SEARCH_DOC_UPLOAD_BATCH_SIZE", 100
         )
+        # Contract-specific search index
+        self.AZURE_SEARCH_CONTRACT_INDEX = os.getenv(
+            "AZURE_SEARCH_CONTRACT_INDEX", "contracts"
+        )
         # Integrated Vectorization
         self.AZURE_SEARCH_DATASOURCE_NAME = os.getenv(
             "AZURE_SEARCH_DATASOURCE_NAME", ""
         )
         self.AZURE_SEARCH_INDEXER_NAME = os.getenv("AZURE_SEARCH_INDEXER_NAME", "")
+
+        # Document Loading Strategy
+        self.DOCUMENT_LOADING_STRATEGY = os.getenv(
+            "DOCUMENT_LOADING_STRATEGY", "layout"
+        )
 
         # Chat History DB Integration Settings
         # Set default values based on DATABASE_TYPE
