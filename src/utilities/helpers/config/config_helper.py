@@ -275,7 +275,26 @@ class ConfigHelper:
                 if env_helper.USE_ADVANCED_IMAGE_PROCESSING:
                     ConfigHelper._append_advanced_image_processors()
 
+                # Override PDF loading strategy if DOCUMENT_LOADING_STRATEGY is set
+                if env_helper.DOCUMENT_LOADING_STRATEGY:
+                    ConfigHelper._override_pdf_loading_strategy(
+                        env_helper.DOCUMENT_LOADING_STRATEGY
+                    )
+
         return ConfigHelper._default_config
+
+    @staticmethod
+    def _override_pdf_loading_strategy(loading_strategy: str):
+        """Override the PDF document processor's loading strategy based on environment variable."""
+        for processor in ConfigHelper._default_config["document_processors"]:
+            if processor["document_type"] == "pdf":
+                logger.info(
+                    "Overriding PDF loading strategy from %s to %s",
+                    processor["loading"]["strategy"],
+                    loading_strategy,
+                )
+                processor["loading"]["strategy"] = loading_strategy
+                break
 
     @staticmethod
     @functools.cache

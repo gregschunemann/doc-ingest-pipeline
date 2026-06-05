@@ -75,6 +75,16 @@ class AzureSearchHelper:
         self.create_index()
         return self.search_client
 
+    def get_contract_search_client(self) -> SearchClient:
+        """Get a search client for the contract index, creating the index if needed."""
+        self.create_contract_index()
+        search_credential = self._search_credential()
+        return SearchClient(
+            endpoint=self.env_helper.AZURE_SEARCH_SERVICE,
+            index_name=self.env_helper.AZURE_SEARCH_CONTRACT_INDEX,
+            credential=search_credential,
+        )
+
     @property
     def search_dimensions(self) -> int:
         if AzureSearchHelper._search_dimension is None:

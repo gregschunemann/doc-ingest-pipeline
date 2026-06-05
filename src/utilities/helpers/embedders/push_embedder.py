@@ -93,7 +93,18 @@ class PushEmbedder(EmbedderBase):
         if documents_to_upload:
             logger.info("Uploading documents in batches")
             batch_size = self.env_helper.AZURE_SEARCH_DOC_UPLOAD_BATCH_SIZE
-            search_client = self.azure_search_helper.get_search_client()
+
+            # Use contract index if loading strategy is "contract"
+            if (
+                embedding_config
+                and embedding_config.loading
+                and embedding_config.loading.strategy == "contract"
+            ):
+                logger.info("Using contract search index")
+                search_client = self.azure_search_helper.get_contract_search_client()
+            else:
+                search_client = self.azure_search_helper.get_search_client()
+
             for i in range(0, len(documents_to_upload), batch_size):
                 batch = documents_to_upload[i : i + batch_size]
                 response = search_client.upload_documents(batch)
