@@ -14,14 +14,14 @@ import os
 
 import azure.functions as func
 
-from src.utilities.helpers.azure_blob_storage_client import (
+from utilities.helpers.azure_blob_storage_client import (
     AzureBlobStorageClient,
     create_queue_client,
 )
-from src.utilities.helpers.embedders.integrated_vectorization_embedder import (
+from utilities.helpers.embedders.integrated_vectorization_embedder import (
     IntegratedVectorizationEmbedder,
 )
-from src.utilities.helpers.env_helper import EnvHelper
+from utilities.helpers.env_helper import EnvHelper
 
 bp_batch_start_processing = func.Blueprint()
 logger = logging.getLogger(__name__)

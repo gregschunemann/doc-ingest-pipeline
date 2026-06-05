@@ -17,9 +17,9 @@ import azure.functions as func
 import requests
 from bs4 import BeautifulSoup
 
-from src.utilities.helpers.azure_blob_storage_client import AzureBlobStorageClient
-from src.utilities.helpers.embedders.embedder_factory import EmbedderFactory
-from src.utilities.helpers.env_helper import EnvHelper
+from utilities.helpers.azure_blob_storage_client import AzureBlobStorageClient
+from utilities.helpers.embedders.embedder_factory import EmbedderFactory
+from utilities.helpers.env_helper import EnvHelper
 
 bp_add_url_embeddings = func.Blueprint()
 logger = logging.getLogger(__name__)

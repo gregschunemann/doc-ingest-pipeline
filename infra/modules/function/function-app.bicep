@@ -92,7 +92,7 @@ resource functionApp 'Microsoft.Web/sites@2024-04-01' = {
     httpsOnly: true
     siteConfig: {
       linuxFxVersion: 'PYTHON|${pythonVersion}'
-      alwaysOn: false // Not supported on Y1 Consumption
+      alwaysOn: true // Required for reliable queue triggers on App Service Plan
       ftpsState: 'Disabled'
       minTlsVersion: '1.2'
       http20Enabled: true
@@ -148,6 +148,10 @@ resource functionApp 'Microsoft.Web/sites@2024-04-01' = {
         {
           name: 'LOGLEVEL'
           value: 'INFO'
+        }
+        {
+          name: 'AzureWebJobsFeatureFlags'
+          value: 'EnableWorkerIndexing'
         }
         {
           name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'

@@ -242,7 +242,7 @@ module appServicePlan 'modules/function/app-service-plan.bicep' = {
     name: '${abbrs.compute.appServicePlan}${resourceToken}'
     location: location
     tags: baseTags
-    skuName: 'Y1'
+    skuName: 'B1'
     kind: 'Linux'
   }
 }
