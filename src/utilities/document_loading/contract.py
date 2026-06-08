@@ -31,6 +31,12 @@ class ContractDocumentLoading(DocumentLoadingBase):
             document_url
         )
 
+        # Separate the document-level contract entities from the page content so they
+        # can be propagated to every chunk during embedding.
+        contract_metadata = {
+            key: value for key, value in contract_content.items() if key != "content"
+        }
+
         # Create a SourceDocument for the overall contract
         # The contract analysis returns structured data rather than pages
         documents = [
@@ -39,6 +45,7 @@ class ContractDocumentLoading(DocumentLoadingBase):
                 source=document_url,
                 offset=0,
                 page_number=0,
+                contract_metadata=contract_metadata,
             )
         ]
 

@@ -280,6 +280,16 @@ class AzureSearchHelper:
                 type=SearchFieldDataType.String,
                 filterable=True,
             ),
+            SimpleField(
+                name=self.env_helper.AZURE_SEARCH_CHUNK_COLUMN,
+                type=SearchFieldDataType.Int32,
+                filterable=True,
+            ),
+            SimpleField(
+                name=self.env_helper.AZURE_SEARCH_OFFSET_COLUMN,
+                type=SearchFieldDataType.Int32,
+                filterable=True,
+            ),
             # Contract-specific fields
             SearchableField(
                 name="contract_type",
@@ -287,9 +297,11 @@ class AzureSearchHelper:
                 filterable=True,
                 facetable=True,
             ),
+            # NOTE: SearchableField ignores `type=`; use `collection=True` to get
+            # a Collection(Edm.String) field. parties/addresses are multi-valued.
             SearchableField(
                 name="parties",
-                type=SearchFieldDataType.Collection(SearchFieldDataType.String),
+                collection=True,
                 filterable=True,
             ),
             SimpleField(
@@ -314,7 +326,7 @@ class AzureSearchHelper:
             ),
             SearchableField(
                 name="addresses",
-                type=SearchFieldDataType.Collection(SearchFieldDataType.String),
+                collection=True,
             ),
         ]
 

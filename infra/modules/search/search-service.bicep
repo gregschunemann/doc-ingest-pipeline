@@ -73,11 +73,16 @@ resource searchService 'Microsoft.Search/searchServices@2023-11-01' = {
     hostingMode: hostingMode
     publicNetworkAccess: publicNetworkAccess
     disableLocalAuth: disableLocalAuth
-    authOptions: disableLocalAuth ? {
+    // When local auth is disabled, authOptions must be null (RBAC/AAD only).
+    // When local auth is allowed, enable AAD *and* key access (aadOrApiKey) so the
+    // Function App managed identity can authenticate data-plane calls (DEC-005).
+    // Note: omitting authOptions while disableLocalAuth is false defaults the service
+    // to apiKeyOnly, which rejects AAD tokens with 403 — hence it is set explicitly.
+    authOptions: disableLocalAuth ? null : {
       aadOrApiKey: {
         aadAuthFailureMode: 'http401WithBearerChallenge'
       }
-    } : null
+    }
     semanticSearch: 'disabled' // Phase 2 enables semantic search
   }
 }

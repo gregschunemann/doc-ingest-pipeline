@@ -154,6 +154,41 @@ class AzureFormRecognizerClient:
         finally:
             logger.info("Method begin_analyze_document_from_url ended")
 
+    @staticmethod
+    def _field_to_text(field) -> str:
+        """Coerce a DocumentField (or its value) into a plain, JSON-serializable string.
+
+        Object/collection contract fields (e.g. Parties, Addresses) expose nested
+        DocumentField objects via ``.value``, which are not JSON serializable. Prefer
+        a string ``.value``; for object fields whose value is a dict of sub-fields,
+        prefer a ``Name`` sub-field, then the field's raw ``.content`` span, then
+        ``str()`` as a last resort.
+        """
+        if field is None:
+            return ""
+        value = getattr(field, "value", None)
+        if isinstance(value, str):
+            return value
+        # Object fields (e.g. a party) carry a dict of named sub-fields.
+        if isinstance(value, dict):
+            for key in ("Name", "name"):
+                if value.get(key) is not None:
+                    return AzureFormRecognizerClient._field_to_text(value[key])
+            content = getattr(field, "content", None)
+            if content:
+                return content
+            # No name/content: join the readable text of the sub-fields.
+            parts = [
+                AzureFormRecognizerClient._field_to_text(sub) for sub in value.values()
+            ]
+            return "; ".join(p for p in parts if p)
+        content = getattr(field, "content", None)
+        if content:
+            return content
+        if value is not None and not hasattr(value, "value"):
+            return str(value)
+        return str(field)
+
     def begin_analyze_contract_from_url(self, source_url: str):
         """
         Analyze a contract document using the prebuilt-contract model.
@@ -215,7 +250,9 @@ class AzureFormRecognizerClient:
 
                 # Extract contract type
                 if "ContractType" in fields and fields["ContractType"]:
-                    contract_data["contract_type"] = fields["ContractType"].value
+                    contract_data["contract_type"] = self._field_to_text(
+                        fields["ContractType"]
+                    )
 
                 # Extract parties
                 if "Parties" in fields and fields["Parties"]:
@@ -224,8 +261,7 @@ class AzureFormRecognizerClient:
                         parties_field.value, list
                     ):
                         contract_data["parties"] = [
-                            party.value if hasattr(party, "value") else str(party)
-                            for party in parties_field.value
+                            self._field_to_text(party) for party in parties_field.value
                         ]
 
                 # Extract dates
@@ -261,8 +297,7 @@ class AzureFormRecognizerClient:
                         addresses_field.value, list
                     ):
                         contract_data["addresses"] = [
-                            addr.value if hasattr(addr, "value") else str(addr)
-                            for addr in addresses_field.value
+                            self._field_to_text(addr) for addr in addresses_field.value
                         ]
 
                 # Extract key clauses

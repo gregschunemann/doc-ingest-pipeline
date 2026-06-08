@@ -50,3 +50,16 @@ __queuestorage__/
 .env
 .env.*
 !.env.sample
+app-settings.json
+function-app-settings-backup.json
+sas-url.txt
+
+# Local-only artifacts / scratch files (do not commit)
+500
+temp_contract.pdf
+deployment-log.txt
+create_contract_index_manual.py
+
+# Deployed mirror + stray tree (not source of truth; never tracked)
+src/functions/utilities/
+src/src/

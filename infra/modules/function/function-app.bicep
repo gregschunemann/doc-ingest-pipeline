@@ -126,6 +126,10 @@ resource functionApp 'Microsoft.Web/sites@2024-04-01' = {
           value: '1'
         }
         {
+          name: 'AZURE_AUTH_TYPE'
+          value: 'rbac' // Managed-identity-first (DEC-005); blob SAS uses user delegation key
+        }
+        {
           name: 'AZURE_BLOB_ACCOUNT_NAME'
           value: azureBlobAccountName
         }

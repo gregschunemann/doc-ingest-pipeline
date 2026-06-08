@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.31.92.45157",
-      "templateHash": "6463903811933371568"
+      "templateHash": "3120297051571091410"
     }
   },
   "parameters": {
@@ -1754,7 +1754,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.31.92.45157",
-              "templateHash": "2165794774025621470"
+              "templateHash": "10204554285889923052"
             }
           },
           "parameters": {
@@ -1861,7 +1861,7 @@
                 "hostingMode": "[parameters('hostingMode')]",
                 "publicNetworkAccess": "[parameters('publicNetworkAccess')]",
                 "disableLocalAuth": "[parameters('disableLocalAuth')]",
-                "authOptions": "[if(parameters('disableLocalAuth'), createObject('aadOrApiKey', createObject('aadAuthFailureMode', 'http401WithBearerChallenge')), null())]",
+                "authOptions": "[if(parameters('disableLocalAuth'), null(), createObject('aadOrApiKey', createObject('aadAuthFailureMode', 'http401WithBearerChallenge')))]",
                 "semanticSearch": "disabled"
               }
             }
@@ -1911,7 +1911,7 @@
             "value": "[variables('baseTags')]"
           },
           "skuName": {
-            "value": "Y1"
+            "value": "B1"
           },
           "kind": {
             "value": "Linux"
@@ -2094,7 +2094,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.31.92.45157",
-              "templateHash": "5179485961922886224"
+              "templateHash": "2062695322531649062"
             }
           },
           "parameters": {
@@ -2232,7 +2232,7 @@
                 "httpsOnly": true,
                 "siteConfig": {
                   "linuxFxVersion": "[format('PYTHON|{0}', parameters('pythonVersion'))]",
-                  "alwaysOn": false,
+                  "alwaysOn": true,
                   "ftpsState": "Disabled",
                   "minTlsVersion": "1.2",
                   "http20Enabled": true,
@@ -2266,6 +2266,10 @@
                       "value": "1"
                     },
                     {
+                      "name": "AZURE_AUTH_TYPE",
+                      "value": "rbac"
+                    },
+                    {
                       "name": "AZURE_BLOB_ACCOUNT_NAME",
                       "value": "[parameters('azureBlobAccountName')]"
                     },
@@ -2288,6 +2292,10 @@
                     {
                       "name": "LOGLEVEL",
                       "value": "INFO"
+                    },
+                    {
+                      "name": "AzureWebJobsFeatureFlags",
+                      "value": "EnableWorkerIndexing"
                     },
                     {
                       "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
@@ -2546,7 +2554,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.31.92.45157",
-              "templateHash": "4321005037651824909"
+              "templateHash": "12389153055310807297"
             }
           },
           "parameters": {
@@ -2623,6 +2631,17 @@
               "name": "[guid(parameters('functionAppPrincipalId'), '974c5e8b-45b9-4653-ba55-5f855dd0fb88', parameters('storageAccountId'))]",
               "properties": {
                 "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '974c5e8b-45b9-4653-ba55-5f855dd0fb88')]",
+                "principalId": "[parameters('functionAppPrincipalId')]",
+                "principalType": "ServicePrincipal"
+              }
+            },
+            {
+              "type": "Microsoft.Authorization/roleAssignments",
+              "apiVersion": "2022-04-01",
+              "scope": "[format('Microsoft.Storage/storageAccounts/{0}', split(parameters('storageAccountId'), '/')[8])]",
+              "name": "[guid(parameters('functionAppPrincipalId'), 'db58b8e5-c6ad-4a2a-8342-4190687cbf4a', parameters('storageAccountId'))]",
+              "properties": {
+                "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'db58b8e5-c6ad-4a2a-8342-4190687cbf4a')]",
                 "principalId": "[parameters('functionAppPrincipalId')]",
                 "principalType": "ServicePrincipal"
               }
@@ -2708,7 +2727,7 @@
           "outputs": {
             "functionAppRoleAssignmentsCount": {
               "type": "int",
-              "value": 7
+              "value": 8
             },
             "userRoleAssignmentsCount": {
               "type": "int",

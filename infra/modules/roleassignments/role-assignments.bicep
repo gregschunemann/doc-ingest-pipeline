@@ -86,6 +86,18 @@ resource functionToStorageQueue 'Microsoft.Authorization/roleAssignments@2022-04
   }
 }
 
+// 2b. Function App → Storage Blob Delegator
+// Required for user-delegation-key SAS generation when AZURE_AUTH_TYPE=rbac (DEC-005).
+resource functionToStorageBlobDelegator 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(functionAppPrincipalId, 'db58b8e5-c6ad-4a2a-8342-4190687cbf4a', storageAccountId)
+  scope: storageAccount
+  properties: {
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'db58b8e5-c6ad-4a2a-8342-4190687cbf4a')
+    principalId: functionAppPrincipalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
 // 3. Function App → Search Index Data Contributor
 resource functionToSearchIndex 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(functionAppPrincipalId, '8ebe5a00-799e-43f5-93ac-243d3dce84a7', searchServiceId)
@@ -170,5 +182,5 @@ resource userToSearchIndexReader 'Microsoft.Authorization/roleAssignments@2022-0
 
 // ========== Outputs ==========
 
-output functionAppRoleAssignmentsCount int = 7
+output functionAppRoleAssignmentsCount int = 8
 output userRoleAssignmentsCount int = empty(deployingUserPrincipalId) ? 0 : 2

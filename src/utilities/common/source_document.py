@@ -16,6 +16,7 @@ class SourceDocument:
         offset: Optional[int] = None,
         page_number: Optional[int] = None,
         chunk_id: Optional[str] = None,
+        contract_metadata: Optional[dict] = None,
     ):
         self.id = id
         self.content = content
@@ -25,6 +26,9 @@ class SourceDocument:
         self.offset = offset
         self.page_number = page_number
         self.chunk_id = chunk_id
+        # Document-level contract entities (parties, dates, clauses, etc.) extracted
+        # by the prebuilt-contract model. None for non-contract documents.
+        self.contract_metadata = contract_metadata
 
     def __str__(self):
         return f"SourceDocument(id={self.id}, title={self.title}, source={self.source}, chunk={self.chunk}, offset={self.offset}, page_number={self.page_number}, chunk_id={self.chunk_id})"

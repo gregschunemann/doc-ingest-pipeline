@@ -17,6 +17,7 @@ from .embedder_base import EmbedderBase
 from ..azure_search_helper import AzureSearchHelper
 from ..document_loading_helper import DocumentLoading
 from ..document_chunking_helper import DocumentChunking
+from ...document_loading.strategies import LoadingStrategy
 from ...common.source_document import SourceDocument
 import base64
 from mimetypes import guess_type
@@ -82,12 +83,20 @@ class PushEmbedder(EmbedderBase):
             documents: List[SourceDocument] = self.document_loading.load(
                 source_url, embedding_config.loading
             )
+            # Capture document-level contract entities before chunking, since the
+            # chunkers rebuild SourceDocuments and would otherwise drop them.
+            contract_metadata = next(
+                (doc.contract_metadata for doc in documents if doc.contract_metadata),
+                None,
+            )
             documents = self.document_chunking.chunk(
                 documents, embedding_config.chunking
             )
 
             for document in documents:
-                documents_to_upload.append(self.__convert_to_search_document(document))
+                documents_to_upload.append(
+                    self.__convert_to_search_document(document, contract_metadata)
+                )
 
         # Upload documents (which are chunks) to search index in batches
         if documents_to_upload:
@@ -98,7 +107,8 @@ class PushEmbedder(EmbedderBase):
             if (
                 embedding_config
                 and embedding_config.loading
-                and embedding_config.loading.strategy == "contract"
+                and embedding_config.loading.loading_strategy
+                == LoadingStrategy.CONTRACT
             ):
                 logger.info("Using contract search index")
                 search_client = self.azure_search_helper.get_contract_search_client()
@@ -170,7 +180,9 @@ If the image is mostly text, use OCR to extract the text as it is displayed in t
         logger.info("Caption generation completed")
         return caption
 
-    def __convert_to_search_document(self, document: SourceDocument):
+    def __convert_to_search_document(
+        self, document: SourceDocument, contract_metadata: dict = None
+    ):
         logger.info(f"Converting document ID {document.id} to search document format")
         embedded_content = self.llm_helper.generate_embeddings(document.content)
         metadata = {
@@ -182,7 +194,7 @@ If the image is mostly text, use OCR to extract the text as it is displayed in t
             "page_number": document.page_number,
             "chunk_id": document.chunk_id,
         }
-        return {
+        search_document = {
             self.env_helper.AZURE_SEARCH_FIELDS_ID: document.id,
             self.env_helper.AZURE_SEARCH_CONTENT_COLUMN: document.content,
             self.env_helper.AZURE_SEARCH_CONTENT_VECTOR_COLUMN: embedded_content,
@@ -192,6 +204,25 @@ If the image is mostly text, use OCR to extract the text as it is displayed in t
             self.env_helper.AZURE_SEARCH_CHUNK_COLUMN: document.chunk,
             self.env_helper.AZURE_SEARCH_OFFSET_COLUMN: document.offset,
         }
+
+        # Denormalize document-level contract entities onto every chunk so they are
+        # filterable/retrievable. Collection fields must never be None.
+        if contract_metadata:
+            search_document["contract_type"] = contract_metadata.get("contract_type")
+            search_document["parties"] = contract_metadata.get("parties") or []
+            search_document["effective_date"] = contract_metadata.get("effective_date")
+            search_document["expiration_date"] = contract_metadata.get(
+                "expiration_date"
+            )
+            search_document["clauses"] = json.dumps(
+                contract_metadata.get("clauses") or {}
+            )
+            search_document["monetary_amounts"] = json.dumps(
+                contract_metadata.get("monetary_amounts") or []
+            )
+            search_document["addresses"] = contract_metadata.get("addresses") or []
+
+        return search_document
 
     def __generate_document_id(self, source_url: str) -> str:
         hash_key = hashlib.sha1(f"{source_url}_1".encode("utf-8")).hexdigest()
