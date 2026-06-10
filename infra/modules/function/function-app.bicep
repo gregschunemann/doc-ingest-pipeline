@@ -62,6 +62,12 @@ param azureSearchService string
 @description('Azure AI Search index name')
 param azureSearchIndex string = 'doc-ingest-index'
 
+@description('Azure AI Search index name for contract documents')
+param azureSearchContractIndex string = 'doc-ingest-contracts'
+
+@description('Document loading strategy (e.g. layout, read, contract)')
+param documentLoadingStrategy string = 'layout'
+
 @description('Use integrated vectorization mode')
 param azureSearchUseIntegratedVectorization bool = false
 
@@ -184,6 +190,14 @@ resource functionApp 'Microsoft.Web/sites@2024-04-01' = {
         {
           name: 'AZURE_SEARCH_INDEX'
           value: azureSearchIndex
+        }
+        {
+          name: 'AZURE_SEARCH_CONTRACT_INDEX'
+          value: azureSearchContractIndex
+        }
+        {
+          name: 'DOCUMENT_LOADING_STRATEGY'
+          value: documentLoadingStrategy
         }
         {
           name: 'AZURE_KEY_VAULT_ENDPOINT'

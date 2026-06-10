@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.31.92.45157",
-      "templateHash": "14579016485434744559"
+      "templateHash": "8263666128627839579"
     }
   },
   "parameters": {
@@ -2077,6 +2077,12 @@
           "azureSearchIndex": {
             "value": "doc-ingest-index"
           },
+          "azureSearchContractIndex": {
+            "value": "doc-ingest-contracts"
+          },
+          "documentLoadingStrategy": {
+            "value": "contract"
+          },
           "azureSearchUseIntegratedVectorization": {
             "value": "[parameters('useIntegratedVectorization')]"
           },
@@ -2094,7 +2100,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.31.92.45157",
-              "templateHash": "2062695322531649062"
+              "templateHash": "7499296522975690492"
             }
           },
           "parameters": {
@@ -2193,6 +2199,20 @@
               "defaultValue": "doc-ingest-index",
               "metadata": {
                 "description": "Azure AI Search index name"
+              }
+            },
+            "azureSearchContractIndex": {
+              "type": "string",
+              "defaultValue": "doc-ingest-contracts",
+              "metadata": {
+                "description": "Azure AI Search index name for contract documents"
+              }
+            },
+            "documentLoadingStrategy": {
+              "type": "string",
+              "defaultValue": "layout",
+              "metadata": {
+                "description": "Document loading strategy (e.g. layout, read, contract)"
               }
             },
             "azureSearchUseIntegratedVectorization": {
@@ -2324,6 +2344,14 @@
                     {
                       "name": "AZURE_SEARCH_INDEX",
                       "value": "[parameters('azureSearchIndex')]"
+                    },
+                    {
+                      "name": "AZURE_SEARCH_CONTRACT_INDEX",
+                      "value": "[parameters('azureSearchContractIndex')]"
+                    },
+                    {
+                      "name": "DOCUMENT_LOADING_STRATEGY",
+                      "value": "[parameters('documentLoadingStrategy')]"
                     },
                     {
                       "name": "AZURE_KEY_VAULT_ENDPOINT",

@@ -268,6 +268,8 @@ module functionApp 'modules/function/function-app.bicep' = {
     azureOpenAiEmbeddingModelDims: '1536'
     azureSearchService: search.outputs.endpoint
     azureSearchIndex: 'doc-ingest-index'
+    azureSearchContractIndex: 'doc-ingest-contracts'
+    documentLoadingStrategy: 'contract'
     azureSearchUseIntegratedVectorization: useIntegratedVectorization
     azureKeyVaultEndpoint: keyVault.outputs.uri
     pythonVersion: '3.11'
