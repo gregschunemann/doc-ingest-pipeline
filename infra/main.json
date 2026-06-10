@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.31.92.45157",
-      "templateHash": "3120297051571091410"
+      "templateHash": "14579016485434744559"
     }
   },
   "parameters": {
@@ -2072,7 +2072,7 @@
             "value": "1536"
           },
           "azureSearchService": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('rg-{0}', parameters('environmentName'))), 'Microsoft.Resources/deployments', 'search-deployment'), '2022-09-01').outputs.name.value]"
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, format('rg-{0}', parameters('environmentName'))), 'Microsoft.Resources/deployments', 'search-deployment'), '2022-09-01').outputs.endpoint.value]"
           },
           "azureSearchIndex": {
             "value": "doc-ingest-index"

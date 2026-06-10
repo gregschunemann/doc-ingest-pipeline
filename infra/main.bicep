@@ -266,7 +266,7 @@ module functionApp 'modules/function/function-app.bicep' = {
     azureOpenAiEndpoint: openAi.outputs.endpoint
     azureOpenAiEmbeddingModel: 'text-embedding-3-small'
     azureOpenAiEmbeddingModelDims: '1536'
-    azureSearchService: search.outputs.name
+    azureSearchService: search.outputs.endpoint
     azureSearchIndex: 'doc-ingest-index'
     azureSearchUseIntegratedVectorization: useIntegratedVectorization
     azureKeyVaultEndpoint: keyVault.outputs.uri
