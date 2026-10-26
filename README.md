@@ -108,6 +108,8 @@ Supporting utility layers (under [src/utilities/](src/utilities/)):
 | **Log Analytics + Application Insights** | Telemetry, logs, and monitoring for the Function App. |
 | **Role assignments** | Least-privilege RBAC granting the Function App's managed identity access to Storage, Search, Document Intelligence, OpenAI, and Key Vault (managed-identity-first per DEC-005). |
 
+The resource group and all resources that support Azure tags receive `SecurityControl=Ignore` and `CostControl=Ignore`. Child resources that do not support tags, such as blob containers, queues, and role assignments, are not tagged.
+
 ## Features
 
 ### Document Analysis Models

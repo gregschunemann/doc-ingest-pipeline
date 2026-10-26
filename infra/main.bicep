@@ -76,6 +76,9 @@ var resourceToken = uniqueString(subscription().id, environmentName, location)
 var baseTags = union(tags, {
   'azd-env-name': environmentName
   'azd-template-name': 'doc-ingest-pipeline'
+  environment:'dev'
+  SecurityControl: 'Ignore'
+  CostControl: 'Ignore'
 })
 
 // ========== Resource Group ==========
@@ -137,6 +140,16 @@ module documentsContainer 'modules/storage/blob-container.bicep' = {
   params: {
     storageAccountName: storage.outputs.name
     containerName: 'documents'
+    publicAccess: 'None'
+  }
+}
+
+module deploymentPackageContainer 'modules/storage/blob-container.bicep' = {
+  name: 'deployment-package-container-deployment'
+  scope: rg
+  params: {
+    storageAccountName: storage.outputs.name
+    containerName: 'app-package'
     publicAccess: 'None'
   }
 }
@@ -242,7 +255,7 @@ module appServicePlan 'modules/function/app-service-plan.bicep' = {
     name: '${abbrs.compute.appServicePlan}${resourceToken}'
     location: location
     tags: baseTags
-    skuName: 'B1'
+    skuName: 'FC1'
     kind: 'Linux'
   }
 }
@@ -273,7 +286,11 @@ module functionApp 'modules/function/function-app.bicep' = {
     azureSearchUseIntegratedVectorization: useIntegratedVectorization
     azureKeyVaultEndpoint: keyVault.outputs.uri
     pythonVersion: '3.11'
+    deploymentStorageContainerName: 'app-package'
   }
+  dependsOn: [
+    deploymentPackageContainer
+  ]
 }
 
 // T0003-08: eventGrid (system topic + event subscription)

@@ -9,9 +9,9 @@
   Parent SHA: 5c99c241b3ef4f4bbbcfdcca0d4b4b3a405424c3
 
   MVP scope per spec-0003:
-  - Linux Y1 Consumption with Python 3.11
+  - Linux Flex Consumption (FC1) with Python 3.11
   - System-assigned managed identity
-  - AzureWebJobsStorage uses connection string (Y1 fallback per tech-spec note)
+  - AzureWebJobsStorage + deployment storage use managed identity (shared key disabled)
   - App settings per tech-spec Function App appSettings table
   - No VNET integration (Phase 5)
   - No private endpoints (Phase 5)
@@ -77,7 +77,17 @@ param azureKeyVaultEndpoint string
 @description('Python runtime version')
 param pythonVersion string = '3.11'
 
-// ========== Storage Account Key for AzureWebJobsStorage (Y1 fallback) ==========
+@description('Name of the blob container used for Flex Consumption deployment packages')
+param deploymentStorageContainerName string = 'app-package'
+
+@description('Maximum instance count for Flex Consumption scaling')
+param maximumInstanceCount int = 100
+
+@description('Per-instance memory (MB) for Flex Consumption')
+@allowed([512, 2048, 4096])
+param instanceMemoryMB int = 2048
+
+// ========== Storage Account Reference ==========
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' existing = {
   name: storageAccountName
@@ -96,40 +106,45 @@ resource functionApp 'Microsoft.Web/sites@2024-04-01' = {
   properties: {
     serverFarmId: appServicePlanId
     httpsOnly: true
+    functionAppConfig: {
+      deployment: {
+        storage: {
+          type: 'blobContainer'
+          value: '${storageAccount.properties.primaryEndpoints.blob}${deploymentStorageContainerName}'
+          authentication: {
+            type: 'SystemAssignedIdentity'
+          }
+        }
+      }
+      scaleAndConcurrency: {
+        maximumInstanceCount: maximumInstanceCount
+        instanceMemoryMB: instanceMemoryMB
+      }
+      runtime: {
+        name: 'python'
+        version: pythonVersion
+      }
+    }
     siteConfig: {
-      linuxFxVersion: 'PYTHON|${pythonVersion}'
-      alwaysOn: true // Required for reliable queue triggers on App Service Plan
       ftpsState: 'Disabled'
       minTlsVersion: '1.2'
       http20Enabled: true
       appSettings: [
         {
-          name: 'FUNCTIONS_WORKER_RUNTIME'
-          value: 'python'
+          name: 'AzureWebJobsStorage__accountName'
+          value: storageAccountName
         }
         {
-          name: 'FUNCTIONS_EXTENSION_VERSION'
-          value: '~4'
+          name: 'AzureWebJobsStorage__blobServiceUri'
+          value: storageAccount.properties.primaryEndpoints.blob
         }
         {
-          name: 'AzureWebJobsStorage'
-          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};AccountKey=${storageAccount.listKeys().keys[0].value};EndpointSuffix=${environment().suffixes.storage}'
+          name: 'AzureWebJobsStorage__queueServiceUri'
+          value: storageAccount.properties.primaryEndpoints.queue
         }
         {
-          name: 'WEBSITE_CONTENTAZUREFILECONNECTIONSTRING'
-          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};AccountKey=${storageAccount.listKeys().keys[0].value};EndpointSuffix=${environment().suffixes.storage}'
-        }
-        {
-          name: 'WEBSITE_CONTENTSHARE'
-          value: toLower(name)
-        }
-        {
-          name: 'SCM_DO_BUILD_DURING_DEPLOYMENT'
-          value: '1'
-        }
-        {
-          name: 'ENABLE_ORYX_BUILD'
-          value: '1'
+          name: 'AzureWebJobsStorage__tableServiceUri'
+          value: storageAccount.properties.primaryEndpoints.table
         }
         {
           name: 'AZURE_AUTH_TYPE'
@@ -158,10 +173,6 @@ resource functionApp 'Microsoft.Web/sites@2024-04-01' = {
         {
           name: 'LOGLEVEL'
           value: 'INFO'
-        }
-        {
-          name: 'AzureWebJobsFeatureFlags'
-          value: 'EnableWorkerIndexing'
         }
         {
           name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'

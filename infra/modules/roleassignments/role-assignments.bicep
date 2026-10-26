@@ -98,6 +98,18 @@ resource functionToStorageBlobDelegator 'Microsoft.Authorization/roleAssignments
   }
 }
 
+// 2c. Function App → Storage Table Data Contributor
+// Required for the Flex Consumption host (AzureWebJobsStorage identity-based) which uses tables.
+resource functionToStorageTable 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(functionAppPrincipalId, '0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3', storageAccountId)
+  scope: storageAccount
+  properties: {
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3')
+    principalId: functionAppPrincipalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
 // 3. Function App → Search Index Data Contributor
 resource functionToSearchIndex 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(functionAppPrincipalId, '8ebe5a00-799e-43f5-93ac-243d3dce84a7', searchServiceId)
@@ -158,12 +170,14 @@ resource functionToKeyVault 'Microsoft.Authorization/roleAssignments@2022-04-01'
 
 // ========== Break-glass Role Assignments (Deploying User) ==========
 
-// 9. Deploying user → Storage Blob Data Reader (RG scope)
+// 9. Deploying user → Storage Blob Data Contributor (RG scope)
+// Contributor (not just Reader) so azd can upload the Flex Consumption deployment package
+// to the app-package container via managed identity (shared key disabled).
 resource userToStorageBlobReader 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(deployingUserPrincipalId)) {
-  name: guid(deployingUserPrincipalId, '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1', resourceGroup().id)
+  name: guid(deployingUserPrincipalId, 'ba92f5b4-2d11-453d-a403-e96b0029c9fe', resourceGroup().id)
   scope: resourceGroup()
   properties: {
-    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1')
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe')
     principalId: deployingUserPrincipalId
     principalType: deployingUserPrincipalType
   }

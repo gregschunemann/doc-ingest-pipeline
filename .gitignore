@@ -59,6 +59,8 @@ sas-url.txt
 temp_contract.pdf
 deployment-log.txt
 create_contract_index_manual.py
+.docs/docs/*
+.smoke/*
 
 # Deployed mirror + stray tree (not source of truth; never tracked)
 src/functions/utilities/
