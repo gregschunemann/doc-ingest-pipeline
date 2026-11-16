@@ -173,6 +173,11 @@ Per [decisions.md](.docs/product/decisions.md) (DEC-005), service-to-service aut
 
 ## Deploy to Azure
 
+For a browser-only deployment with customer-specific environment and Bicep
+parameter files, see [Configure in vscode.dev and deploy to Azure](.docs/cloud-shell-deployment.md).
+That guide uses the browser editor plus a few Bash commands in Cloud Shell;
+the workstation instructions below use PowerShell 7.
+
 These instructions deploy the ingestion service in this checkout, using
 [azure.yaml](azure.yaml) and [infra/main.bicep](infra/main.bicep). No web UI or
 assessment agent is deployed. Provisioning and document processing incur Azure
