@@ -20,7 +20,7 @@ All resources are created in one resource group (`rg-<environmentName>`) in a si
 
 | # | Component | Configuration in this template | How it is used |
 | - | --------- | ------------------------------ | -------------- |
-| 1 | **Resource Group** | Subscription-scoped deployment creates `rg-<env>`. Tags `SecurityControl=Ignore` and `CostControl=Ignore`. | Container and RBAC boundary for everything below. |
+| 1 | **Resource Group** | Subscription-scoped deployment creates `rg-<env>`. | Container and RBAC boundary for everything below. |
 | 2 | **Storage Account** | Standard_LRS, TLS 1.2, public blob access off, shared-key access currently **enabled**. | Holds the `documents` container (uploads), the `app-package` container (Function deployment package), the `doc-processing` and `doc-processing-poison` queues, and the Function runtime state (`AzureWebJobsStorage`, identity-based). |
 | 3 | **Event Grid system topic and subscription** | Source is the storage account. Delivers `BlobCreated` only to the `doc-processing` queue. Up to 30 delivery attempts. | Turns an upload into a queue message. Deletions are not propagated automatically. |
 | 4 | **Function App and App Service Plan** | Linux Flex Consumption (FC1), Python 3.11, 2 GB instances, max 100 instances, system-assigned managed identity, HTTPS only, FTPS off. | Runs the ingestion code. Details in section 3. |

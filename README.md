@@ -108,7 +108,7 @@ Supporting utility layers (under [src/utilities/](src/utilities/)):
 | **Log Analytics + Application Insights** | Telemetry, logs, and monitoring for the Function App. |
 | **Role assignments** | Least-privilege RBAC granting the Function App's managed identity access to Storage, Search, Document Intelligence, OpenAI, and Key Vault (managed-identity-first per DEC-005). |
 
-The resource group and all resources that support Azure tags receive `SecurityControl=Ignore` and `CostControl=Ignore`. Child resources that do not support tags, such as blob containers, queues, and role assignments, are not tagged.
+The resource group and all resources that support Azure tags receive the template's default tags and any custom tags supplied through the `tags` parameter. Child resources that do not support tags, such as blob containers, queues, and role assignments, are not tagged.
 
 ## Features
 
@@ -202,8 +202,7 @@ variables and virtual-environment PATH before continuing.
   `text-embedding-3-small` model, version `1`, with **GlobalStandard capacity 30**.
   Model availability and quota vary by subscription and region. East US 2 is
   an option only if these checks pass; no region is guaranteed to work.
-- Review the template's public network access and its
-  `SecurityControl=Ignore` / `CostControl=Ignore` tags with your administrator.
+- Review the template's public network access with your administrator.
   This template does not configure private endpoints or VNET integration.
   GlobalStandard embeddings do not guarantee processing stays in the resource's
   region.
@@ -223,11 +222,11 @@ if ($LASTEXITCODE -ne 0) { throw 'Python 3.11 is unavailable.' }
 
 ### 2. Prepare the Python environment and deployment files
 
-Use the approved package proxy, with no public-feed fallback:
+Use the standard public Python Package Index (PyPI):
 
 ```powershell
 $env:PIP_CONFIG_FILE = 'NUL'
-$env:PIP_INDEX_URL = 'https://packagefeedproxy.microsoft.io/pypi/simple'
+$env:PIP_INDEX_URL = 'https://pypi.org/simple'
 $env:PIP_EXTRA_INDEX_URL = ''
 
 if (-not (Test-Path .\.venv\Scripts\python.exe)) {
@@ -244,10 +243,10 @@ if ($LASTEXITCODE -ne 0) { throw 'Dependency validation failed.' }
 
 Ensure an existing virtual environment also uses Python 3.11. If Windows reports
 an access-denied error for a loaded package, stop the local Function host or
-debugger using that environment before retrying. Do not bypass the approved feed.
+debugger using that environment before retrying.
 The pip variables apply to this terminal; they do not configure Poetry sources or
-an Azure-hosted build. Verify packaging logs use the approved feed, and stop if a
-remote build requires additional feed configuration.
+an Azure-hosted build. Poetry uses public PyPI by default, and this repository
+does not configure a custom feed for Azure-hosted builds.
 
 **Copy utilities before every package/deploy.** The service root is
 `src/functions`, but canonical utilities live in `src/utilities`; this checkout

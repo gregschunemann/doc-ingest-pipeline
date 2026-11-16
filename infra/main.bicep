@@ -77,8 +77,6 @@ var baseTags = union(tags, {
   'azd-env-name': environmentName
   'azd-template-name': 'doc-ingest-pipeline'
   environment:'dev'
-  SecurityControl: 'Ignore'
-  CostControl: 'Ignore'
 })
 
 // ========== Resource Group ==========
