@@ -227,11 +227,11 @@ if ($LASTEXITCODE -ne 0) { throw 'Python 3.11 is unavailable.' }
 
 ### 2. Prepare the Python environment and deployment files
 
-Use the standard public Python Package Index (PyPI):
+Use the Microsoft package feed proxy:
 
 ```powershell
 $env:PIP_CONFIG_FILE = 'NUL'
-$env:PIP_INDEX_URL = 'https://pypi.org/simple'
+$env:PIP_INDEX_URL = 'https://packagefeedproxy.microsoft.io/pypi/simple'
 $env:PIP_EXTRA_INDEX_URL = ''
 
 if (-not (Test-Path .\.venv\Scripts\python.exe)) {
@@ -249,9 +249,12 @@ if ($LASTEXITCODE -ne 0) { throw 'Dependency validation failed.' }
 Ensure an existing virtual environment also uses Python 3.11. If Windows reports
 an access-denied error for a loaded package, stop the local Function host or
 debugger using that environment before retrying.
-The pip variables apply to this terminal; they do not configure Poetry sources or
-an Azure-hosted build. Poetry uses public PyPI by default, and this repository
-does not configure a custom feed for Azure-hosted builds.
+The pip variables apply to this terminal, including pip-based pre-commit hook
+environment creation. Poetry's primary source is configured separately in
+`pyproject.toml`. The runtime `requirements.txt` also specifies the proxy so
+Azure-hosted builds use it. The build environment must be able to reach the
+proxy; resolve access or authentication errors rather than adding a public-feed
+fallback. Pre-commit hook source repositories remain on GitHub.
 
 **Copy utilities before every package/deploy.** The service root is
 `src/functions`, but canonical utilities live in `src/utilities`; this checkout

@@ -18,6 +18,8 @@ jobs:
     env:
       POETRY_VERSION: "2.2.1"
       PYTHON_VERSION: "3.11"
+      PIP_INDEX_URL: "https://packagefeedproxy.microsoft.io/pypi/simple"
+      PIP_EXTRA_INDEX_URL: ""
 
     steps:
       - name: Checkout

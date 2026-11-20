@@ -12,6 +12,11 @@ files = [
     {file = "aiohappyeyeballs-2.6.2.tar.gz", hash = "sha256:e202810ee718bd01fc6ef49e8ea53d023d5cb6b581076d7925aa499fa55dbe64"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "aiohttp"
 version = "3.14.0"
@@ -155,6 +160,11 @@ yarl = ">=1.17.0,<2.0"
 [package.extras]
 speedups = ["Brotli (>=1.2) ; platform_python_implementation == \"CPython\" and sys_platform != \"android\" and sys_platform != \"ios\"", "aiodns (>=3.3.0) ; sys_platform != \"android\" and sys_platform != \"ios\"", "backports.zstd ; platform_python_implementation == \"CPython\" and python_version < \"3.14\" and sys_platform != \"android\" and sys_platform != \"ios\"", "brotlicffi (>=1.2) ; platform_python_implementation != \"CPython\""]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "aiosignal"
 version = "1.4.0"
@@ -171,6 +181,11 @@ files = [
 frozenlist = ">=1.1.0"
 typing-extensions = {version = ">=4.2", markers = "python_version < \"3.13\""}
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "annotated-types"
 version = "0.7.0"
@@ -182,6 +197,11 @@ files = [
     {file = "annotated_types-0.7.0-py3-none-any.whl", hash = "sha256:1f02e8b43a8fbbc3f3e0d4f0f4bfc8131bcb4eebe8849b8e5c773f3a1c582a53"},
     {file = "annotated_types-0.7.0.tar.gz", hash = "sha256:aff07c09a53a08bc8cfccb9c85b05f1aa9a2a6f23728d790723543408344ce89"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "anyio"
@@ -203,6 +223,11 @@ typing_extensions = {version = ">=4.5", markers = "python_version < \"3.13\""}
 [package.extras]
 trio = ["trio (>=0.32.0)"]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "async-timeout"
 version = "4.0.3"
@@ -216,6 +241,11 @@ files = [
     {file = "async_timeout-4.0.3-py3-none-any.whl", hash = "sha256:7405140ff1230c310e51dc27b3145b9092d659ce68ff733fb0cefe3ee42be028"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "attrs"
 version = "26.1.0"
@@ -227,6 +257,11 @@ files = [
     {file = "attrs-26.1.0-py3-none-any.whl", hash = "sha256:c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309"},
     {file = "attrs-26.1.0.tar.gz", hash = "sha256:d03ceb89cb322a8fd706d4fb91940737b6642aa36998fe130a9bc96c985eff32"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "azure-ai-formrecognizer"
@@ -246,6 +281,11 @@ azure-core = ">=1.23.0"
 msrest = ">=0.6.21"
 typing-extensions = ">=4.0.1"
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "azure-common"
 version = "1.1.28"
@@ -257,6 +297,11 @@ files = [
     {file = "azure-common-1.1.28.zip", hash = "sha256:4ac0cd3214e36b6a1b6a442686722a5d8cc449603aa833f3f0f40bda836704a3"},
     {file = "azure_common-1.1.28-py2.py3-none-any.whl", hash = "sha256:5c12d3dcf4ec20599ca6b0d3e09e86e146353d443e7fcc050c9a19c1f9df20ad"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "azure-core"
@@ -278,6 +323,11 @@ typing-extensions = ">=4.6.0"
 aio = ["aiohttp (>=3.0)"]
 tracing = ["opentelemetry-api (>=1.26,<2.0)"]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "azure-functions"
 version = "1.24.0"
@@ -295,6 +345,11 @@ werkzeug = {version = ">=3.1.3,<3.2.0", markers = "python_version >= \"3.9\""}
 
 [package.extras]
 dev = ["azure-functions-durable", "coverage", "flake8 (>=4.0.1,<4.1.0) ; python_version < \"3.11\"", "flake8 (>=7.1.1,<7.2.0) ; python_version >= \"3.11\"", "flake8-docstrings", "pre-commit", "pytest", "pytest-cov", "pytest-instafail"]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "azure-identity"
@@ -315,6 +370,11 @@ msal = ">=1.35.1"
 msal-extensions = ">=1.2.0"
 typing-extensions = ">=4.0.0"
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "azure-keyvault-secrets"
 version = "4.10.0"
@@ -332,6 +392,11 @@ azure-core = ">=1.31.0"
 isodate = ">=0.6.1"
 typing-extensions = ">=4.6.0"
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "azure-search-documents"
 version = "11.6.0b1"
@@ -348,6 +413,11 @@ files = [
 azure-common = ">=1.1,<2.0"
 azure-core = ">=1.28.0,<2.0.0"
 isodate = ">=0.6.0"
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "azure-storage-blob"
@@ -370,6 +440,11 @@ typing-extensions = ">=4.6.0"
 [package.extras]
 aio = ["azure-core[aio] (>=1.37.0)"]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "azure-storage-queue"
 version = "12.16.0"
@@ -391,6 +466,11 @@ typing-extensions = ">=4.6.0"
 [package.extras]
 aio = ["azure-core[aio] (>=1.37.0)"]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "backports-asyncio-runner"
 version = "1.2.0"
@@ -403,6 +483,11 @@ files = [
     {file = "backports_asyncio_runner-1.2.0-py3-none-any.whl", hash = "sha256:0da0a936a8aeb554eccb426dc55af3ba63bcdc69fa1a600b5bb305413a4477b5"},
     {file = "backports_asyncio_runner-1.2.0.tar.gz", hash = "sha256:a5aa7b2b7d8f8bfcaa2b57313f70792df84e32a2a746f585213373f900b42162"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "beautifulsoup4"
@@ -426,6 +511,11 @@ chardet = ["chardet"]
 charset-normalizer = ["charset-normalizer"]
 html5lib = ["html5lib"]
 lxml = ["lxml"]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "black"
@@ -480,6 +570,11 @@ d = ["aiohttp (>=3.10)"]
 jupyter = ["ipython (>=7.8.0)", "tokenize-rt (>=3.2.0)"]
 uvloop = ["uvloop (>=0.15.2) ; sys_platform != \"win32\"", "winloop (>=0.5.0) ; sys_platform == \"win32\""]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "certifi"
 version = "2026.5.20"
@@ -491,6 +586,11 @@ files = [
     {file = "certifi-2026.5.20-py3-none-any.whl", hash = "sha256:3c52e209ba0a4ad7aebe60436a4ab349c39e1e602e8c134221e546902ad25897"},
     {file = "certifi-2026.5.20.tar.gz", hash = "sha256:69dea482ab64caa7b9f6aba1c6bf48bb6a5448d1c0f1b17ab42ad8c763a5344d"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "cffi"
@@ -590,6 +690,11 @@ files = [
 [package.dependencies]
 pycparser = {version = "*", markers = "implementation_name != \"PyPy\""}
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "cfgv"
 version = "3.5.0"
@@ -601,6 +706,11 @@ files = [
     {file = "cfgv-3.5.0-py2.py3-none-any.whl", hash = "sha256:a8dc6b26ad22ff227d2634a65cb388215ce6cc96bbcc5cfde7641ae87e8dacc0"},
     {file = "cfgv-3.5.0.tar.gz", hash = "sha256:d5b1034354820651caa73ede66a6294d6e95c1b00acc5e9b098e917404669132"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "chardet"
@@ -647,6 +757,11 @@ files = [
     {file = "chardet-7.4.3-py3-none-any.whl", hash = "sha256:1173b74051570cf08099d7429d92e4882d375ad4217f92a6e5240ccfb26f231e"},
     {file = "chardet-7.4.3.tar.gz", hash = "sha256:cc1d4eb92a4ec1c2df3b490836ffa46922e599d34ce0bb75cf41fd2bf6303d56"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "charset-normalizer"
@@ -787,6 +902,11 @@ files = [
     {file = "charset_normalizer-3.4.7.tar.gz", hash = "sha256:ae89db9e5f98a11a4bf50407d4363e7b09b31e55bc117b4f7d80aab97ba009e5"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "click"
 version = "8.4.1"
@@ -802,6 +922,11 @@ files = [
 [package.dependencies]
 colorama = {version = "*", markers = "platform_system == \"Windows\""}
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "colorama"
 version = "0.4.6"
@@ -814,6 +939,11 @@ files = [
     {file = "colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44"},
 ]
 markers = {main = "platform_system == \"Windows\"", dev = "sys_platform == \"win32\" or platform_system == \"Windows\""}
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "coverage"
@@ -937,12 +1067,17 @@ tomli = {version = "*", optional = true, markers = "python_full_version <= \"3.1
 [package.extras]
 toml = ["tomli ; python_full_version <= \"3.11.0a6\""]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "cryptography"
 version = "45.0.7"
 description = "cryptography is a package which provides cryptographic recipes and primitives to Python developers."
 optional = false
-python-versions = "!=3.9.0,!=3.9.1,>=3.7"
+python-versions = ">=3.7, !=3.9.0, !=3.9.1"
 groups = ["main"]
 markers = "python_version < \"3.12\""
 files = [
@@ -998,12 +1133,17 @@ ssh = ["bcrypt (>=3.1.5)"]
 test = ["certifi (>=2024)", "cryptography-vectors (==45.0.7)", "pretend (>=0.7)", "pytest (>=7.4.0)", "pytest-benchmark (>=4.0)", "pytest-cov (>=2.10.1)", "pytest-xdist (>=3.5.0)"]
 test-randomorder = ["pytest-randomly"]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "cryptography"
 version = "48.0.0"
 description = "cryptography is a package which provides cryptographic recipes and primitives to Python developers."
 optional = false
-python-versions = "!=3.9.0,!=3.9.1,>=3.9"
+python-versions = ">=3.9, !=3.9.0, !=3.9.1"
 groups = ["main"]
 markers = "python_version >= \"3.12\""
 files = [
@@ -1064,12 +1204,17 @@ cffi = {version = ">=2.0.0", markers = "platform_python_implementation != \"PyPy
 [package.extras]
 ssh = ["bcrypt (>=3.1.5)"]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "dataclasses-json"
 version = "0.6.7"
 description = "Easily serialize dataclasses to and from JSON."
 optional = false
-python-versions = "<4.0,>=3.7"
+python-versions = ">=3.7,<4.0"
 groups = ["main"]
 files = [
     {file = "dataclasses_json-0.6.7-py3-none-any.whl", hash = "sha256:0dbf33f26c8d5305befd61b39d2b3414e8a407bedc2834dea9b8d642666fb40a"},
@@ -1079,6 +1224,11 @@ files = [
 [package.dependencies]
 marshmallow = ">=3.18.0,<4.0.0"
 typing-inspect = ">=0.4.0,<1"
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "distlib"
@@ -1092,6 +1242,11 @@ files = [
     {file = "distlib-0.4.1.tar.gz", hash = "sha256:c3804d0d2d4b5fcd44036eb860cb6660485fcdf5c2aba53dc324d805837ea65b"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "distro"
 version = "1.9.0"
@@ -1103,6 +1258,11 @@ files = [
     {file = "distro-1.9.0-py3-none-any.whl", hash = "sha256:7bffd925d65168f85027d8da9af6bddab658135b840670a223589bc0c8ef02b2"},
     {file = "distro-1.9.0.tar.gz", hash = "sha256:2fa77c6fd8940f116ee1d6b94a2f90b13b5ea8d019b98bc8bafdcabcdd9bdbed"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "exceptiongroup"
@@ -1123,6 +1283,11 @@ typing-extensions = {version = ">=4.6.0", markers = "python_version < \"3.13\""}
 [package.extras]
 test = ["pytest (>=6)"]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "filelock"
 version = "3.29.0"
@@ -1134,6 +1299,11 @@ files = [
     {file = "filelock-3.29.0-py3-none-any.whl", hash = "sha256:96f5f6344709aa1572bbf631c640e4ebeeb519e08da902c39a001882f30ac258"},
     {file = "filelock-3.29.0.tar.gz", hash = "sha256:69974355e960702e789734cb4871f884ea6fe50bd8404051a3530bc07809cf90"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "flake8"
@@ -1151,6 +1321,11 @@ files = [
 mccabe = ">=0.7.0,<0.8.0"
 pycodestyle = ">=2.14.0,<2.15.0"
 pyflakes = ">=3.4.0,<3.5.0"
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "frozenlist"
@@ -1292,6 +1467,11 @@ files = [
     {file = "frozenlist-1.8.0.tar.gz", hash = "sha256:3ede829ed8d842f6cd48fc7081d7a41001a56f1f38603f9d49bf3020d59a31ad"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "greenlet"
 version = "3.5.1"
@@ -1386,6 +1566,11 @@ files = [
 docs = ["Sphinx", "furo"]
 test = ["objgraph", "psutil", "setuptools"]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "h11"
 version = "0.16.0"
@@ -1397,6 +1582,11 @@ files = [
     {file = "h11-0.16.0-py3-none-any.whl", hash = "sha256:63cf8bbe7522de3bf65932fda1d9c2772064ffb3dae62d55932da54b31cb6c86"},
     {file = "h11-0.16.0.tar.gz", hash = "sha256:4e35b956cf45792e4caa5885e69fba00bdbc6ffafbfa020300e549b208ee5ff1"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "httpcore"
@@ -1419,6 +1609,11 @@ asyncio = ["anyio (>=4.0,<5.0)"]
 http2 = ["h2 (>=3,<5)"]
 socks = ["socksio (==1.*)"]
 trio = ["trio (>=0.22.0,<1.0)"]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "httpx"
@@ -1445,6 +1640,11 @@ http2 = ["h2 (>=3,<5)"]
 socks = ["socksio (==1.*)"]
 zstd = ["zstandard (>=0.18.0)"]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "identify"
 version = "2.6.19"
@@ -1459,6 +1659,11 @@ files = [
 
 [package.extras]
 license = ["ukkonen"]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "idna"
@@ -1475,6 +1680,11 @@ files = [
 [package.extras]
 all = ["mypy (>=1.11.2)", "pytest (>=8.3.2)", "ruff (>=0.6.2)"]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "iniconfig"
 version = "2.3.0"
@@ -1487,6 +1697,11 @@ files = [
     {file = "iniconfig-2.3.0.tar.gz", hash = "sha256:c76315c77db068650d49c5b56314774a7804df16fee4402c1f19d6d15d8c4730"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "isodate"
 version = "0.7.2"
@@ -1498,6 +1713,11 @@ files = [
     {file = "isodate-0.7.2-py3-none-any.whl", hash = "sha256:28009937d8031054830160fce6d409ed342816b543597cece116d966c6d99e15"},
     {file = "isodate-0.7.2.tar.gz", hash = "sha256:4cd1aa0f43ca76f4a6c6c0292a85f40b35ec2e43e315b59f06e6d32171a953e6"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "jiter"
@@ -1618,10 +1838,15 @@ files = [
     {file = "jiter-0.15.0.tar.gz", hash = "sha256:4251acc80e2b7c9b7b8823456ea0fceeb0734dac2df7636d3c711b38476b5a76"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "jsonpatch"
 version = "1.33"
-description = "Apply JSON-Patches (RFC 6902)"
+description = "Apply JSON-Patches (RFC 6902) "
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*, !=3.6.*"
 groups = ["main"]
@@ -1632,6 +1857,11 @@ files = [
 
 [package.dependencies]
 jsonpointer = ">=1.9"
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "jsonpointer"
@@ -1645,12 +1875,17 @@ files = [
     {file = "jsonpointer-3.1.1.tar.gz", hash = "sha256:0b801c7db33a904024f6004d526dcc53bbb8a4a0f4e32bfd10beadf60adf1900"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "langchain"
 version = "0.2.17"
 description = "Building applications with LLMs through composability"
 optional = false
-python-versions = "<4.0,>=3.8.1"
+python-versions = ">=3.8.1,<4.0"
 groups = ["main"]
 files = [
     {file = "langchain-0.2.17-py3-none-any.whl", hash = "sha256:a97a33e775f8de074370aecab95db148b879c794695d9e443c95457dce5eb525"},
@@ -1673,12 +1908,17 @@ requests = ">=2,<3"
 SQLAlchemy = ">=1.4,<3"
 tenacity = ">=8.1.0,<8.4.0 || >8.4.0,<9.0.0"
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "langchain-community"
 version = "0.2.19"
 description = "Community contributed LangChain integrations."
 optional = false
-python-versions = "<4.0,>=3.8.1"
+python-versions = ">=3.8.1,<4.0"
 groups = ["main"]
 files = [
     {file = "langchain_community-0.2.19-py3-none-any.whl", hash = "sha256:651d761f2d37d63f89de75d65858f6c7f6ea99c455622e9c13ca041622dad0c5"},
@@ -1700,12 +1940,17 @@ requests = ">=2,<3"
 SQLAlchemy = ">=1.4,<3"
 tenacity = ">=8.1.0,<8.4.0 || >8.4.0,<9.0.0"
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "langchain-core"
 version = "0.2.43"
 description = "Building applications with LLMs through composability"
 optional = false
-python-versions = "<4.0,>=3.8.1"
+python-versions = ">=3.8.1,<4.0"
 groups = ["main"]
 files = [
     {file = "langchain_core-0.2.43-py3-none-any.whl", hash = "sha256:619601235113298ebf8252a349754b7c28d3cf7166c7c922da24944b78a9363a"},
@@ -1724,12 +1969,17 @@ PyYAML = ">=5.3"
 tenacity = ">=8.1.0,<8.4.0 || >8.4.0,<9.0.0"
 typing-extensions = ">=4.7"
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "langchain-text-splitters"
 version = "0.2.4"
 description = "LangChain text splitting utilities"
 optional = false
-python-versions = "<4.0,>=3.8.1"
+python-versions = ">=3.8.1,<4.0"
 groups = ["main"]
 files = [
     {file = "langchain_text_splitters-0.2.4-py3-none-any.whl", hash = "sha256:2702dee5b7cbdd595ccbe43b8d38d01a34aa8583f4d6a5a68ad2305ae3e7b645"},
@@ -1739,12 +1989,17 @@ files = [
 [package.dependencies]
 langchain-core = ">=0.2.38,<0.3.0"
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "langsmith"
 version = "0.1.147"
 description = "Client library to connect to the LangSmith LLM Tracing and Evaluation Platform."
 optional = false
-python-versions = "<4.0,>=3.8.1"
+python-versions = ">=3.8.1,<4.0"
 groups = ["main"]
 files = [
     {file = "langsmith-0.1.147-py3-none-any.whl", hash = "sha256:7166fc23b965ccf839d64945a78e9f1157757add228b086141eb03a60d699a15"},
@@ -1763,6 +2018,11 @@ requests-toolbelt = ">=1.0.0,<2.0.0"
 
 [package.extras]
 langsmith-pyo3 = ["langsmith-pyo3 (>=0.1.0rc2,<0.2.0)"]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "lxml"
@@ -1914,6 +2174,11 @@ html-clean = ["lxml_html_clean"]
 html5 = ["html5lib"]
 htmlsoup = ["BeautifulSoup4"]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "markupsafe"
 version = "3.0.3"
@@ -2013,6 +2278,11 @@ files = [
     {file = "markupsafe-3.0.3.tar.gz", hash = "sha256:722695808f4b6457b320fdc131280796bdceb04ab50fe1795cd540799ebe1698"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "marshmallow"
 version = "3.26.2"
@@ -2033,6 +2303,11 @@ dev = ["marshmallow[tests]", "pre-commit (>=3.5,<5.0)", "tox"]
 docs = ["autodocsumm (==0.2.14)", "furo (==2024.8.6)", "sphinx (==8.1.3)", "sphinx-copybutton (==0.5.2)", "sphinx-issues (==5.0.0)", "sphinxext-opengraph (==0.9.1)"]
 tests = ["pytest", "simplejson"]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "mccabe"
 version = "0.7.0"
@@ -2044,6 +2319,11 @@ files = [
     {file = "mccabe-0.7.0-py2.py3-none-any.whl", hash = "sha256:6c2d30ab6be0e4a46919781807b4f0d834ebdd6c6e3dca0bda5a15f863427b6e"},
     {file = "mccabe-0.7.0.tar.gz", hash = "sha256:348e0240c33b60bbdf4e523192ef919f28cb2c3d7d5c7794f74009290f236325"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "msal"
@@ -2065,6 +2345,11 @@ requests = ">=2.0.0,<3"
 [package.extras]
 broker = ["pymsalruntime (>=0.20,<0.21) ; python_version >= \"3.9\" and platform_system == \"Darwin\"", "pymsalruntime (>=0.20,<0.21) ; python_version >= \"3.9\" and platform_system == \"Linux\"", "pymsalruntime (>=0.20,<0.21) ; python_version >= \"3.9\" and platform_system == \"Windows\""]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "msal-extensions"
 version = "1.3.1"
@@ -2082,6 +2367,11 @@ msal = ">=1.29,<2"
 
 [package.extras]
 portalocker = ["portalocker (>=1.4,<4)"]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "msrest"
@@ -2104,6 +2394,11 @@ requests-oauthlib = ">=0.5.0"
 
 [package.extras]
 async = ["aiodns ; python_version >= \"3.5\"", "aiohttp (>=3.0) ; python_version >= \"3.5\""]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "multidict"
@@ -2264,6 +2559,11 @@ files = [
 [package.dependencies]
 typing-extensions = {version = ">=4.1.0", markers = "python_version < \"3.11\""}
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "mypy-extensions"
 version = "1.1.0"
@@ -2276,17 +2576,27 @@ files = [
     {file = "mypy_extensions-1.1.0.tar.gz", hash = "sha256:52e68efc3284861e772bbcd66823fde5ae21fd2fdb51c62a211403730b916558"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "nodeenv"
 version = "1.10.0"
 description = "Node.js virtual environment builder"
 optional = false
-python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7"
+python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*"
 groups = ["dev"]
 files = [
     {file = "nodeenv-1.10.0-py2.py3-none-any.whl", hash = "sha256:5bb13e3eed2923615535339b3c620e76779af4cb4c6a90deccc9e36b274d3827"},
     {file = "nodeenv-1.10.0.tar.gz", hash = "sha256:996c191ad80897d076bdfba80a41994c2b47c68e224c542b48feba42ba00f8bb"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "numpy"
@@ -2334,6 +2644,11 @@ files = [
     {file = "numpy-1.26.4.tar.gz", hash = "sha256:2a02aba9ed12e4ac4eb3ea9421c420301a0c6460d9830d74a9df87efa4912010"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "oauthlib"
 version = "3.3.1"
@@ -2350,6 +2665,11 @@ files = [
 rsa = ["cryptography (>=3.0.0)"]
 signals = ["blinker (>=1.4.0)"]
 signedtoken = ["cryptography (>=3.0.0)", "pyjwt (>=2.0.0,<3)"]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "openai"
@@ -2378,6 +2698,11 @@ aiohttp = ["aiohttp", "httpx-aiohttp (>=0.1.8)"]
 datalib = ["numpy (>=1)", "pandas (>=1.2.3)", "pandas-stubs (>=1.1.0.11)"]
 realtime = ["websockets (>=13,<16)"]
 voice-helpers = ["numpy (>=2.0.2)", "sounddevice (>=0.5.1)"]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "orjson"
@@ -2464,6 +2789,11 @@ files = [
     {file = "orjson-3.11.9.tar.gz", hash = "sha256:4fef17e1f8722c11587a6ef18e35902450221da0028e65dbaaa543619e68e48f"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "packaging"
 version = "24.2"
@@ -2475,6 +2805,11 @@ files = [
     {file = "packaging-24.2-py3-none-any.whl", hash = "sha256:09abb1bccd265c01f4a3aa3f7a7db064b36514d2cba19a2f694fe6150451a759"},
     {file = "packaging-24.2.tar.gz", hash = "sha256:c228a6dc5e932d346bc5739379109d49e8853dd8223571c7c5b55260edc0b97f"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "pathspec"
@@ -2493,6 +2828,11 @@ hyperscan = ["hyperscan (>=0.7)"]
 optional = ["typing-extensions (>=4)"]
 re2 = ["google-re2 (>=1.1)"]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "platformdirs"
 version = "4.10.0"
@@ -2504,6 +2844,11 @@ files = [
     {file = "platformdirs-4.10.0-py3-none-any.whl", hash = "sha256:fb516cdb12eb0d857d0cd85a7c57cea4d060bee4578d6cf5a14dfdf8cbf8784a"},
     {file = "platformdirs-4.10.0.tar.gz", hash = "sha256:31e761a6a0ca04faf7353ea759bdba55652be214725111e5aac52dfa29d4bef7"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "pluggy"
@@ -2520,6 +2865,11 @@ files = [
 [package.extras]
 dev = ["pre-commit", "tox"]
 testing = ["coverage", "pytest", "pytest-benchmark"]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "pre-commit"
@@ -2539,6 +2889,11 @@ identify = ">=1.0.0"
 nodeenv = ">=0.11.1"
 pyyaml = ">=5.1"
 virtualenv = ">=20.10.0"
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "propcache"
@@ -2671,6 +3026,11 @@ files = [
     {file = "propcache-0.5.2.tar.gz", hash = "sha256:01c4fc7480cd0598bb4b57022df55b9ca296da7fc5a8760bd8451a7e63a7d427"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "pycodestyle"
 version = "2.14.0"
@@ -2682,6 +3042,11 @@ files = [
     {file = "pycodestyle-2.14.0-py2.py3-none-any.whl", hash = "sha256:dd6bf7cb4ee77f8e016f9c8e74a35ddd9f67e1d5fd4184d86c3b98e07099f42d"},
     {file = "pycodestyle-2.14.0.tar.gz", hash = "sha256:c4b5b517d278089ff9d0abdec919cd97262a3367449ea1c8b49b91529167b783"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "pycparser"
@@ -2695,6 +3060,11 @@ files = [
     {file = "pycparser-3.0-py3-none-any.whl", hash = "sha256:b727414169a36b7d524c1c3e31839a521725078d7b2ff038656844266160a992"},
     {file = "pycparser-3.0.tar.gz", hash = "sha256:600f49d217304a5902ac3c37e1281c9fe94e4d0489de643a9504c5cdfdfc6b29"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "pydantic"
@@ -2717,6 +3087,11 @@ typing-inspection = ">=0.4.0"
 [package.extras]
 email = ["email-validator (>=2.0.0)"]
 timezone = ["tzdata ; python_version >= \"3.9\" and platform_system == \"Windows\""]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "pydantic-core"
@@ -2830,6 +3205,11 @@ files = [
 [package.dependencies]
 typing-extensions = ">=4.6.0,<4.7.0 || >4.7.0"
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "pyflakes"
 version = "3.4.0"
@@ -2841,6 +3221,11 @@ files = [
     {file = "pyflakes-3.4.0-py2.py3-none-any.whl", hash = "sha256:f742a7dbd0d9cb9ea41e9a24a918996e8170c799fa528688d40dd582c8265f4f"},
     {file = "pyflakes-3.4.0.tar.gz", hash = "sha256:b24f96fafb7d2ab0ec5075b7350b3d2d2218eab42003821c06344973d3ea2f58"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "pygments"
@@ -2856,6 +3241,11 @@ files = [
 
 [package.extras]
 windows-terminal = ["colorama (>=0.4.6)"]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "pyjwt"
@@ -2875,6 +3265,11 @@ typing_extensions = {version = ">=4.0", markers = "python_version < \"3.11\""}
 
 [package.extras]
 crypto = ["cryptography (>=3.4.0)"]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "pytest"
@@ -2900,6 +3295,11 @@ tomli = {version = ">=1", markers = "python_version < \"3.11\""}
 [package.extras]
 dev = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "requests", "setuptools", "xmlschema"]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "pytest-asyncio"
 version = "1.4.0"
@@ -2921,6 +3321,11 @@ typing-extensions = {version = ">=4.12", markers = "python_version < \"3.13\""}
 docs = ["sphinx (>=5.3)", "sphinx-rtd-theme (>=1)", "sphinx-tabs (>=3.5)"]
 testing = ["coverage (>=6.2)", "hypothesis (>=5.7.1)"]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "pytest-cov"
 version = "7.1.0"
@@ -2941,6 +3346,11 @@ pytest = ">=7"
 [package.extras]
 testing = ["process-tests", "pytest-xdist", "virtualenv"]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "pytest-mock"
 version = "3.15.1"
@@ -2958,6 +3368,11 @@ pytest = ">=6.2.5"
 
 [package.extras]
 dev = ["pre-commit", "pytest-asyncio", "tox"]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "python-discovery"
@@ -2980,6 +3395,11 @@ platformdirs = ">=4.3.6,<5"
 docs = ["furo (>=2025.12.19)", "sphinx (>=9.1)", "sphinx-autodoc-typehints (>=3.6.3)", "sphinxcontrib-mermaid (>=2)", "sphinxcontrib-towncrier (>=0.4)", "towncrier (>=25.8)"]
 testing = ["covdefaults (>=2.3)", "coverage (>=7.5.4)", "pytest (>=8.3.5)", "pytest-mock (>=3.14)", "setuptools (>=75.1)"]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "python-docx"
 version = "1.2.0"
@@ -2996,6 +3416,11 @@ files = [
 lxml = ">=3.1.0"
 typing_extensions = ">=4.9.0"
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "python-dotenv"
 version = "1.2.2"
@@ -3010,6 +3435,11 @@ files = [
 
 [package.extras]
 cli = ["click (>=5.0)"]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "pytokens"
@@ -3065,6 +3495,11 @@ files = [
 
 [package.extras]
 dev = ["black", "build", "mypy", "pytest", "pytest-cov", "setuptools", "tox", "twine", "wheel"]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "pyyaml"
@@ -3148,6 +3583,11 @@ files = [
     {file = "pyyaml-6.0.3-cp39-cp39-win_amd64.whl", hash = "sha256:2e71d11abed7344e42a8849600193d15b6def118602c4c176f748e4583246007"},
     {file = "pyyaml-6.0.3.tar.gz", hash = "sha256:d76623373421df22fb4cf8817020cbb7ef15c725b9d5e45f17e189bfc384190f"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "regex"
@@ -3273,6 +3713,11 @@ files = [
     {file = "regex-2026.5.9.tar.gz", hash = "sha256:a8234aa23ec39894bfe4a3f1b85616a7032481964a13ac6fc9f10de4f6fca270"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "requests"
 version = "2.34.2"
@@ -3295,6 +3740,11 @@ urllib3 = ">=1.26,<3"
 socks = ["PySocks (>=1.5.6,!=1.5.7)"]
 use-chardet-on-py3 = ["chardet (>=3.0.2,<8)"]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "requests-oauthlib"
 version = "2.0.0"
@@ -3314,6 +3764,11 @@ requests = ">=2.0.0"
 [package.extras]
 rsa = ["oauthlib[signedtoken] (>=3.0.0)"]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "requests-toolbelt"
 version = "1.0.0"
@@ -3329,6 +3784,11 @@ files = [
 [package.dependencies]
 requests = ">=2.0.1,<3.0.0"
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "sniffio"
 version = "1.3.1"
@@ -3341,6 +3801,11 @@ files = [
     {file = "sniffio-1.3.1.tar.gz", hash = "sha256:f4324edc670a0f49750a81b895f35c3adb843cca46f0530f79fc1babb23789dc"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "soupsieve"
 version = "2.8.4"
@@ -3352,6 +3817,11 @@ files = [
     {file = "soupsieve-2.8.4-py3-none-any.whl", hash = "sha256:e7e6b0769c8f51ed59acab6e994b00621096cfb1c640a7509295987388fbaf65"},
     {file = "soupsieve-2.8.4.tar.gz", hash = "sha256:e121fd02e975c695e4e9e8774a5ee35d74714b59307868dcc5319ad2d9e3328e"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "sqlalchemy"
@@ -3450,6 +3920,11 @@ postgresql-psycopgbinary = ["psycopg[binary] (>=3.0.7)"]
 pymysql = ["pymysql"]
 sqlcipher = ["sqlcipher3_binary"]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "tenacity"
 version = "8.5.0"
@@ -3465,6 +3940,11 @@ files = [
 [package.extras]
 doc = ["reno", "sphinx"]
 test = ["pytest", "tornado (>=4.5)", "typeguard"]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "tiktoken"
@@ -3540,6 +4020,11 @@ requests = "*"
 [package.extras]
 blobfile = ["blobfile (>=3)"]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "tomli"
 version = "2.4.1"
@@ -3598,6 +4083,11 @@ files = [
     {file = "tomli-2.4.1.tar.gz", hash = "sha256:7c7e1a961a0b2f2472c1ac5b69affa0ae1132c39adcb67aba98568702b9cc23f"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "tqdm"
 version = "4.67.3"
@@ -3620,6 +4110,11 @@ notebook = ["ipywidgets (>=6)"]
 slack = ["slack-sdk"]
 telegram = ["requests"]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "typing-extensions"
 version = "4.12.2"
@@ -3631,6 +4126,11 @@ files = [
     {file = "typing_extensions-4.12.2-py3-none-any.whl", hash = "sha256:04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d"},
     {file = "typing_extensions-4.12.2.tar.gz", hash = "sha256:1a7ead55c7e559dd4dee8856e3a88b41225abfe1ce8df57b7c13915fe121ffb8"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "typing-inspect"
@@ -3648,6 +4148,11 @@ files = [
 mypy-extensions = ">=0.3.0"
 typing-extensions = ">=3.7.4"
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "typing-inspection"
 version = "0.4.2"
@@ -3662,6 +4167,11 @@ files = [
 
 [package.dependencies]
 typing-extensions = ">=4.12.0"
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "urllib3"
@@ -3680,6 +4190,11 @@ brotli = ["brotli (>=1.2.0) ; platform_python_implementation == \"CPython\"", "b
 h2 = ["h2 (>=4,<5)"]
 socks = ["pysocks (>=1.5.6,!=1.5.7,<2.0)"]
 zstd = ["backports-zstd (>=1.0.0) ; python_version < \"3.14\""]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "virtualenv"
@@ -3703,6 +4218,11 @@ platformdirs = ">=3.9.1,<5"
 docs = ["furo (>=2023.7.26)", "proselint (>=0.13)", "sphinx (>=7.1.2,!=7.3)", "sphinx-argparse (>=0.4)", "sphinxcontrib-towncrier (>=0.2.1a0)", "towncrier (>=23.6)"]
 test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess (>=1)", "flaky (>=3.7)", "packaging (>=23.1)", "pytest (>=7.4)", "pytest-env (>=0.8.2)", "pytest-freezer (>=0.4.8) ; platform_python_implementation == \"PyPy\" or platform_python_implementation == \"GraalVM\" or platform_python_implementation == \"CPython\" and sys_platform == \"win32\" and python_version >= \"3.13\"", "pytest-mock (>=3.11.1)", "pytest-randomly (>=3.12)", "pytest-timeout (>=2.1)", "setuptools (>=68)", "time-machine (>=2.10) ; platform_python_implementation == \"CPython\""]
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "virtualenv"
 version = "21.4.2"
@@ -3722,6 +4242,11 @@ filelock = {version = ">=3.24.2,<4", markers = "python_version >= \"3.10\""}
 platformdirs = ">=3.9.1,<5"
 python-discovery = ">=1.4"
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [[package]]
 name = "werkzeug"
 version = "3.1.8"
@@ -3739,6 +4264,11 @@ markupsafe = ">=2.1.1"
 
 [package.extras]
 watchdog = ["watchdog (>=2.3)"]
+
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
 
 [[package]]
 name = "yarl"
@@ -3859,7 +4389,12 @@ idna = ">=2.0"
 multidict = ">=4.0"
 propcache = ">=0.2.1"
 
+[package.source]
+type = "legacy"
+url = "https://packagefeedproxy.microsoft.io/pypi/simple"
+reference = "microsoft-proxy"
+
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "525873c6c5deb1dce5ee444749c3742fc26641389e08cc4d7833cef8fd013834"
+content-hash = "bae363a4300aeb80b56e33b48ab8eb339d4bc350b74be816159c5ee47a54c756"

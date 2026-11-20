@@ -280,8 +280,11 @@ The `rsync` destination is the ignored generated mirror, not the canonical
 
 `azd deploy` packages the service, applies [`.funcignore`](../src/functions/.funcignore),
 and requests the Python Flex Consumption remote build. Dependencies come from
-[requirements.txt](../src/functions/requirements.txt), using public PyPI by
-default. Check the build/deployment logs for successful dependency installation
+[requirements.txt](../src/functions/requirements.txt), which specifies
+`https://packagefeedproxy.microsoft.io/pypi/simple`. The Azure build environment
+must have access to that proxy; resolve feed access or authentication failures
+before retrying rather than adding a public-feed fallback.
+Check the build/deployment logs for successful dependency installation
 and function startup; a ZIP upload alone does not establish success.
 
 **Do not run `azd up` or `azd provision` in this workflow.** They use the existing
